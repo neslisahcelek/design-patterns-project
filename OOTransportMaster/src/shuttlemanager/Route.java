@@ -2,7 +2,7 @@ package shuttlemanager;
 
 import java.util.List;
 
-class Route {
+public class Route {
 
     int distance;
     //int[] path;
@@ -11,5 +11,13 @@ class Route {
     public Route(int distance, List<Integer> path) {
         this.distance = distance;
         this.path = path;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public List<Integer> getPath() {
+        return path;
     }
 }
