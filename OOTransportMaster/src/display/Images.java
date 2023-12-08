@@ -8,8 +8,10 @@ import java.io.IOException;
 
 class Images
 {
-    private static Images images = null;
+    private static Images images;
+
     private Images(){}
+
     public static Images getImages() {
         if (images == null) {
             images = new Images();

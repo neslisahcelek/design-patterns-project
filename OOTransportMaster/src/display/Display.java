@@ -2,7 +2,7 @@ package display;
 
 import java.awt.*;
 
-class Display {
+public class Display {
     Frame frame;
     Panel panel;
 

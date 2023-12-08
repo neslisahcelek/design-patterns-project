@@ -3,7 +3,7 @@ package display;
 import javax.swing.*;
 import java.awt.*;
 
-class Panel extends JPanel {
+public class Panel extends JPanel {
 
     private Color[][] colors;
 
