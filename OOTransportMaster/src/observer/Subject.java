@@ -3,7 +3,7 @@ package observer;
 import observer.Observer;
 
 public interface Subject {
-    void registerObserver(Observer observer);
-    void removeObserver(Observer observer);
+    void registerObserver(Passenger observer);
+    void removeObserver(Passenger observer);
     void notifyObservers();
 }
