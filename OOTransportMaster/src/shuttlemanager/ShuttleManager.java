@@ -1,8 +1,7 @@
 package shuttlemanager;
 
-import observer.Observer;
-import observer.Passenger;
-import observer.Shuttle;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 
 import java.util.ArrayList;
 
@@ -12,27 +11,30 @@ public class ShuttleManager {
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
     }
+
+    // en yakından başladığı için yolcular bittikten sonraki dönüşü uzayabilir
+
     public void findShortestRoute(ArrayList<Passenger> passengers, int startLocation, Route[][] route) {
         if (passengers.isEmpty()) {
             return;
         }
 
-        ClosestPassenger closestPassenger = new ClosestPassenger(passengers.get(0), passengers.get(0).getLocation());
+        ClosestPassenger closestPassenger = new ClosestPassenger(passengers.get(0), passengers.get(0).getStation());
 
         int minDistance = Integer.MAX_VALUE;
 
         for (int i = 0; i < passengers.size(); i++) {
-            int passengerDistance = route[startLocation][passengers.get(i).getLocation()].getDistance();
+            int passengerDistance = route[startLocation][passengers.get(i).getStation()].getDistance();
             System.out.println(passengerDistance);
             if (minDistance > passengerDistance) {
                 minDistance = passengerDistance;
-                closestPassenger = new ClosestPassenger(passengers.get(i), passengers.get(i).getLocation());
+                closestPassenger = new ClosestPassenger(passengers.get(i), passengers.get(i).getStation());
             }
         }
         System.out.println("min distance: " + minDistance);
 
         passengers.remove(closestPassenger.passenger);
-        passengers.forEach((Passenger p) -> System.out.print("kalanlar: " + p.getLocation()));
+        passengers.forEach((Passenger p) -> System.out.print("kalanlar: " + p.getStation()));
         System.out.println();
 
         findShortestRoute(passengers, closestPassenger.location, route);
