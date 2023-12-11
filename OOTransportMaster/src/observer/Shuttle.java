@@ -1,20 +1,21 @@
 package observer;
 
-import display.Drawable;
-import motion.Movable;
+import display.drawable.DrawableBehavior;
+import display.drawable.DrawableShuttle;
 import motion.Position;
+import motion.movable.IMovable;
 
 import java.util.ArrayList;
 
-public class Shuttle implements Subject{ //Receiver
+public class Shuttle extends IShuttle implements Subject{ //Receiver
     private ArrayList<Observer> passengers;
-    private Movable movable;
-    private Drawable drawable;
+    private IMovable movable;
 
-    public Shuttle(Movable movable,Drawable drawable) {
+    public Shuttle(IMovable movable, double positionI, double positionJ) {
         passengers = new ArrayList<>();
+        super.station = 0;
         this.movable = movable;
-        this.drawable = drawable;
+        super.drawableBehavior = new DrawableShuttle(positionI, positionJ);
     }
 
     @Override
@@ -32,25 +33,12 @@ public class Shuttle implements Subject{ //Receiver
         passengers.forEach(Observer::update);
     }
 
-    public ArrayList<Observer> getPassengers() {
-        return passengers;
-    }
-
-    public Movable getMovable() {
+    public IMovable getMovable() {
         return movable;
     }
 
-    public void setMovable(Movable movable) {
+    public void setMovable(IMovable movable) {
         this.movable = movable;
     }
-
-    public Drawable getDrawable() {return drawable;}
-
-    public void setDrawable(Drawable drawable) {this.drawable = drawable;}
-
-    public void updatePosition(Position position)
-    {
-        movable.setPosition(position);
-        drawable.setPosition(position);
-    }
+    
 }
