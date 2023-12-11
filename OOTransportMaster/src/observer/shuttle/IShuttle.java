@@ -1,21 +1,26 @@
-package observer;
+package observer.shuttle;
 
 import display.drawable.DrawableBehavior;
 import motion.Position;
-import motion.movable.IMovable;
+import motion.movable.MovableBehavior;
 
 public abstract class IShuttle {
-    DrawableBehavior drawableBehavior;
+    DrawableBehavior drawable;
+    MovableBehavior movable;
     int station;
 
     public IShuttle() {}
 
-    public DrawableBehavior getDrawable() {return drawableBehavior;}
+    public DrawableBehavior getDrawable() {return drawable;}
+
+    public MovableBehavior getMovable() {
+        return movable;
+    }
 
     public void updatePosition(Position position)
     {
         movable.setPosition(position);
-        drawableBehavior.setPosition(position);
+        drawable.setPosition(position);
     }
 
     public int getStation() {

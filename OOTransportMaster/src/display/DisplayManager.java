@@ -1,7 +1,7 @@
 package display;
 
-import observer.Passenger;
-import observer.Shuttle;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 
 import java.awt.*;
 import java.util.ArrayList;

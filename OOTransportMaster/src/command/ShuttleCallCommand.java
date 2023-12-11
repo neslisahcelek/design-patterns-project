@@ -1,7 +1,7 @@
 package command;
 
-import observer.Passenger;
-import observer.Shuttle;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 
 public class ShuttleCallCommand implements Command {
     Shuttle shuttle;
