@@ -1,19 +1,17 @@
 package observer;
 
 
-public class Passenger implements Observer, IPassenger {
+public class Passenger implements Observer {
     int location;
     @Override
     public void update() {
         //shuttle start, phone light on
     }
 
-    @Override
     public int getLocation() {
         return location;
     }
 
-    @Override
     public void setLocation(int i) {
         location = i;
     }
