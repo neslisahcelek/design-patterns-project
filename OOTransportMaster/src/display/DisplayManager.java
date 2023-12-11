@@ -30,67 +30,50 @@ public class DisplayManager {
         Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
     }
 
-    void draw(ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+    public static Color[][] updateImage (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
 
-        Color[][] newFrame = Image.getMap();
+        Color[][] newImage = Image.getMap();
 
         updateDrawableArrayList(shuttle,passenger);
 
         for (int i = 0; i < drawableArrayList.size(); i++) {
 
-            drawdraw(drawableArrayList.get(i).getPosition().getI(),
-                    drawableArrayList.get(i).getPosition().getJ(),
-                    drawableArrayList.get(i).getType());
+            addToImage(drawableArrayList.get(i),newImage);
         }
 
-
-
-
-
-
-
-        display(newFrame);
+        return newImage;
     }
 
-    void drawdraw (double i, double j, int type)
+    public static void addToImage (Drawable drawable, Color[][] baseImage)
     {
-        //sol üstten başlanarak yazılır yani sol üst konumudur
-        Color[][] add;
+        Color[][] additionalImage;
+        int i = (int) drawable.getPosition().getI();
+        int j = (int) drawable.getPosition().getJ();
+        int type = drawable.getType();
 
-        if(type == 2) {add = Image.getPassenger();}
-        //if(type == 3)
-        else {add = Image.getShuttle();}
+        if(type == 2) {additionalImage = Image.getPassenger();}
+        else {additionalImage = Image.getShuttle();}
 
-        for (int k = 0; k < add.length ; k++) {
-            for (int l = 0; l < add[0].length; l++) {
-                //???
+        for (int k = 0; k < additionalImage.length ; k++) {
+            for (int l = 0; l < additionalImage[0].length; l++) {
+                if((i+k<=baseImage.length-1) && (j+l<=baseImage[0].length-1))
+                {baseImage[i+k][j+l] = additionalImage[k][l];}
             }
 
         }
-
-
-
     }
 
-    void display(Color[][] newFrame)
+
+    public static void display(ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers)
     {
         Display display1 = new Display();
         display1.createDisplay(Image.getMap());
 
-        //arraylist döner yukarıda olanı önce yazar
-        //sol üstten yazmaya başlar
-
-        display1.updateDisplay(newFrame);
-        //display1.updateDisplay(Images.getMap());
+        //for
+        display1.updateDisplay(updateImage(shuttles,passengers));
 
 
         //frame oynatmalaır burada yönetilir?
-
-        //veya başka bi yerden, neyse şimdilik onu düşünmeyelim
     }
-
-
-
-
 
 }
