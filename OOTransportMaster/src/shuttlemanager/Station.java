@@ -5,7 +5,7 @@ public class Station {
     int locationJ;
     int name;
 
-    static Station[] stations = {
+    public static Station[] stations = {
             new Station(106, 856, 0),
             new Station(130, 763, 1),
             new Station(65, 503, 2),
@@ -31,6 +31,27 @@ public class Station {
         this.name = name;
     }
 
+    public int getLocationI() {
+        return locationI;
+    }
 
+    public void setLocationI(int locationI) {
+        this.locationI = locationI;
+    }
 
+    public int getLocationJ() {
+        return locationJ;
+    }
+
+    public void setLocationJ(int locationJ) {
+        this.locationJ = locationJ;
+    }
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
+    }
 }
