@@ -3,8 +3,12 @@ import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.DisplayManager;
 import motion.Motion;
+import observer.Observer;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import shuttlemanager.Chart;
+import shuttlemanager.Route;
+import shuttlemanager.ShuttleManager;
 
 import java.util.ArrayList;
 
@@ -24,12 +28,12 @@ public class Main {
             callCommand(shuttles.get(0), p);
         }
 
-        /*
         int i = 3;
         for (Passenger p : passengers) {
-            p.setLocation(++i);
+            p.setStation(++i);
         }
 
+        /*
         // start journey
         ShuttleManager sm = new ShuttleManager(shuttles.get(0));
         Route[][] route = Chart.getChart();
@@ -39,6 +43,7 @@ public class Main {
         }
         sm.findShortestRoute(passengers, 1, route);
          */
+        
         DisplayManager.display(shuttles,passengers);
 
     }
