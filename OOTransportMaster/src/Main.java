@@ -2,8 +2,11 @@ import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Drawable;
+import display.drawable.DrawablePassenger;
+import display.drawable.DrawableShuttleBehavior;
 import motion.Motion;
 import motion.Movable;
+import motion.movable.MovableShuttle;
 import observer.Observer;
 import observer.Passenger;
 import observer.Shuttle;
@@ -29,6 +32,7 @@ public class Main {
             callCommand(shuttles.get(0), p);
         }
 
+        /*
         int i = 3;
         for (Passenger p : passengers) {
             p.setLocation(++i);
@@ -43,27 +47,25 @@ public class Main {
         }
         sm.findShortestRoute(passengers, 1, route);
 
+         */
+
     }
 
     static void addShuttle(int positionI, int positionJ)
     {
-        int shuttleImage = 3;// shuttle image code
-
-        Shuttle shuttle = new Shuttle(new Movable(positionI,positionJ),new Drawable(positionI,positionJ,shuttleImage));
+        Shuttle shuttle = new Shuttle(new MovableShuttle(positionI,positionJ),new DrawableShuttleBehavior(positionI,positionJ));
         shuttles.add(shuttle);
         
-        shuttle.getMovable().setVelocityDirection(Motion.calculateVelocityDirection(shuttle.getMovable(),5,5));
+        //shuttle.getMovable().setVelocityDirection(Motion.calculateVelocityDirection(shuttle.getMovable(),5,5));
         shuttle.getMovable().setSpeed(5);
         System.out.println( shuttle.getMovable().getPosition().getI() + " " +  shuttle.getMovable().getPosition().getJ());
-        shuttle.updatePosition(Motion.calculateNextPositionWithDestination( shuttle.getMovable(),20,20));
+        //shuttle.updatePosition(Motion.calculateNextPositionWithDestination( shuttle.getMovable(),20,20));
 
     }
 
     static void addPassenger(int positionI, int positionJ)
     {
-        int passengerImage = 2;// passenger image code
-
-        Passenger passenger = new Passenger(new Movable(positionI,positionJ),new Drawable(positionI,positionJ,passengerImage));
+        Passenger passenger = new Passenger(1,positionI,positionJ);
         passengers.add(passenger);
     }
 
