@@ -14,7 +14,7 @@ public abstract class IPassenger {
         return station;
     }
 
-    void setStation(int station) {
+    public void setStation(int station) {
         this.station = station;
     }
 }
