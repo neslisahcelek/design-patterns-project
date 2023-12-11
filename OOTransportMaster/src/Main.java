@@ -1,3 +1,4 @@
+
 //import display.Drawable;
 //import display.drawable.DrawableShuttleBehavior;
 import inputmanager.Process;
@@ -10,8 +11,8 @@ public class Main {
     public static void main(String[] args) {
         Process.mainly();
 
-
     }
+
 
 
 

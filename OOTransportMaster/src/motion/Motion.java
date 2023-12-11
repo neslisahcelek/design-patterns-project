@@ -1,7 +1,9 @@
 package motion;
 
+import motion.movable.MovableBehavior;
+
 public class Motion {
-    public static VelocityDirection calculateVelocityDirection(Movable movable, double endI, double endJ)
+    public static VelocityDirection calculateVelocityDirection(MovableBehavior movable, double endI, double endJ)
     {
         double startI = movable.getPosition().getI();
         double startJ = movable.getPosition().getJ();
@@ -34,7 +36,7 @@ public class Motion {
     //ayrıca array için yazmada yuvarlamayı görselleştiriciye bırakalım
     // bu double tipinde ciddi bir konum sadece
 
-    static Position calculateNextPosition(Movable movable)
+    static Position calculateNextPosition(MovableBehavior movable)
     {
         double newPositionI = movable.getPosition().getI() +
                 (movable.getVelocityDirection().getI() * movable.getSpeed());
@@ -46,7 +48,7 @@ public class Motion {
     }
 
     public static Position calculateNextPositionWithDestination(
-            Movable movable, double destinationI, double destinationJ)
+            MovableBehavior movable, double destinationI, double destinationJ)
     {
         double firstPositionI = movable.getPosition().getI();
 
