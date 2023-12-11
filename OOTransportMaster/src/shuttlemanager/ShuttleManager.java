@@ -12,34 +12,39 @@ public class ShuttleManager {
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
     }
-    public void findShortestRoute() {
-        Route[][] route = Chart.getChart();
+    public void findShortestRoute(ArrayList<Passenger> passengers, int startLocation, Route[][] route) {
+        if (passengers.isEmpty()) {
+            return;
+        }
 
-        ArrayList<Passenger> passengers = shuttle.getPassengers();
-        passengers.forEach((Passenger passenger) -> {
-            int passengerLocation = passenger.getLocation();
+        ClosestPassenger closestPassenger = new ClosestPassenger(passengers.get(0), passengers.get(0).getLocation());
 
-            int minDistance = 0;
-            int minDistanceIndex = 0;
-            for (int i = 0; i < route[passengerLocation].length; i++) {
-                int passengerDistance = route[passengerLocation][i].getDistance();
-                if (minDistance > passengerDistance) {
-                    minDistance = passengerDistance;
-                    minDistanceIndex = i;
-                }
-            }
-            route[passengerLocation][minDistanceIndex].getPath().forEach((Integer i) -> System.out.print(i + " "));
-            System.out.println(route[passengerLocation][minDistanceIndex].getDistance());
-        });
-        /*
-        int minDistance = 0;
-        shuttle.getPassengers().forEach((Passenger passenger) -> {
-            int passengerDistance = route[1][passenger.getLocation()].getDistance();
+        int minDistance = Integer.MAX_VALUE;
+
+        for (int i = 0; i < passengers.size(); i++) {
+            int passengerDistance = route[startLocation][passengers.get(i).getLocation()].getDistance();
+            System.out.println(passengerDistance);
             if (minDistance > passengerDistance) {
                 minDistance = passengerDistance;
+                closestPassenger = new ClosestPassenger(passengers.get(i), passengers.get(i).getLocation());
             }
-        });
+        }
+        System.out.println("min distance: " + minDistance);
 
-         */
+        passengers.remove(closestPassenger.passenger);
+        passengers.forEach((Passenger p) -> System.out.print("kalanlar: " + p.getLocation()));
+        System.out.println();
+
+        findShortestRoute(passengers, closestPassenger.location, route);
+    }
+}
+
+class ClosestPassenger {
+    Passenger passenger;
+    int location;
+
+    public ClosestPassenger(Passenger passenger, int location) {
+        this.passenger = passenger;
+        this.location = location;
     }
 }

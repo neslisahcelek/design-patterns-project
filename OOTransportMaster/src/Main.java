@@ -1,11 +1,14 @@
 import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
+import observer.Observer;
 import observer.Passenger;
 import observer.Shuttle;
 import shuttlemanager.Chart;
 import shuttlemanager.Route;
 import shuttlemanager.ShuttleManager;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,13 +35,14 @@ public class Main {
         passenger2.setLocation(5);
         passenger3.setLocation(8);
 
+        // start journey
         ShuttleManager sm = new ShuttleManager(shuttle);
-
         Route[][] route = Chart.getChart();
-        route[5][8].getPath().forEach((Integer i) -> System.out.print(i + " "));
-        System.out.println(route[5][8].getDistance());
+        ArrayList<Passenger> passengers = new ArrayList<>();
+        for (Observer p : shuttle.getPassengers()) {
+            passengers.add((Passenger) p);
+        }
+        sm.findShortestRoute(passengers, 1, route);
 
-        sm.findShortestRoute();
-        //hangi duraklarda yolcu var
     }
 }

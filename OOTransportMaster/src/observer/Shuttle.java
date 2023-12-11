@@ -3,19 +3,19 @@ package observer;
 import java.util.ArrayList;
 
 public class Shuttle implements Subject{ //Receiver
-    private ArrayList<Passenger> passengers;
+    private ArrayList<Observer> passengers;
 
     public Shuttle() {
         passengers = new ArrayList<>();
     }
 
     @Override
-    public void registerObserver(Passenger passenger) {
+    public void registerObserver(Observer passenger) {
         passengers.add(passenger);
     }
 
     @Override
-    public void removeObserver(Passenger passenger) {
+    public void removeObserver(Observer passenger) {
         passengers.remove(passenger);
     }
 
@@ -24,7 +24,7 @@ public class Shuttle implements Subject{ //Receiver
         passengers.forEach(Observer::update);
     }
 
-    public ArrayList<Passenger> getPassengers() {
+    public ArrayList<Observer> getPassengers() {
         return passengers;
     }
 }
