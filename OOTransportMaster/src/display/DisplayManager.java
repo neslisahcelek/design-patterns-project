@@ -1,8 +1,9 @@
 package display;
 
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 import display.drawable.DrawableBehavior;
-import observer.Passenger;
-import observer.Shuttle;
+
 
 import java.awt.*;
 import java.util.ArrayList;
