@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Chart {
+public class Chart { //bozuk
     private static Route[][] chart;
 
     public static Route[][] getChart() {
@@ -38,6 +38,7 @@ public class Chart {
         Route[][] shortestPaths = new Route[numNodes][numNodes];
 
 
+        // Başlangıç değerleri atama
         for (int i = 0; i < numNodes; i++) {
             for (int j = 0; j < numNodes; j++) {
                 if (distances[i][j] != Integer.MAX_VALUE) {
@@ -48,6 +49,7 @@ public class Chart {
             }
         }
 
+        // Floyd-Warshall algoritması
         for (int k = 0; k < numNodes; k++) {
             for (int i = 0; i < numNodes; i++) {
                 for (int j = 0; j < numNodes; j++) {
@@ -65,3 +67,4 @@ public class Chart {
         return shortestPaths;
     }
 }
+

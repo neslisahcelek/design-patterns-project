@@ -6,15 +6,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-class Images
+public class Image
 {
-    private static Images images;
-
-    private Images(){}
-
-    public static Images getImages() {
+    private static Image images = null;
+    private Image(){}
+    public static Image getImages() {
         if (images == null) {
-            images = new Images();
+            images = new Image();
         }
         return images;
     }
@@ -53,7 +51,7 @@ class Images
 
         File file = new File(filePath);
         BufferedImage image;
-        //BufferedImage image = null;
+//BufferedImage image = null;
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
@@ -78,4 +76,5 @@ class Images
 
     }
 }
+
 

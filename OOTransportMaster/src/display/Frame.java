@@ -3,7 +3,7 @@ package display;
 import javax.swing.*;
 import java.awt.*;
 
-class Frame extends JFrame {
+public class Frame extends JFrame {
     public Frame(Panel panel) {
         super("OOCampus");
 
