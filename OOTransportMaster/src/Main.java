@@ -1,6 +1,7 @@
 import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
+import display.DisplayManager;
 import display.Drawable;
 import motion.Motion;
 import motion.Movable;
@@ -37,11 +38,15 @@ public class Main {
         // start journey
         ShuttleManager sm = new ShuttleManager(shuttles.get(0));
         Route[][] route = Chart.getChart();
-        ArrayList<Passenger> passengers = new ArrayList<>();
+
         for (Observer p : shuttles.get(0).getPassengers()) {
             passengers.add((Passenger) p);
         }
         sm.findShortestRoute(passengers, 1, route);
+
+
+
+        DisplayManager.display(shuttles,passengers);
 
     }
 
