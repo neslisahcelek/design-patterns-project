@@ -1,5 +1,6 @@
 package display;
 
+import display.drawable.DrawableBehavior;
 import observer.Passenger;
 import observer.Shuttle;
 
@@ -10,20 +11,20 @@ import java.util.Comparator;
 
 public class DisplayManager {
 
-    static ArrayList<Drawable> drawableArrayList = new ArrayList<>();
+    static ArrayList<DrawableBehavior> drawableArrayList = new ArrayList<>();
     public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
 
         drawableArrayList.clear();
 
         for (Object obj : shuttle) {
-            if (obj instanceof Drawable) {
-                drawableArrayList.add((Drawable) obj);
+            if (obj instanceof DrawableBehavior) {
+                drawableArrayList.add((DrawableBehavior) obj);
             }
         }
 
         for (Object obj : passenger) {
-            if (obj instanceof Drawable) {
-                drawableArrayList.add((Drawable) obj);
+            if (obj instanceof DrawableBehavior) {
+                drawableArrayList.add((DrawableBehavior) obj);
             }
         }
 
@@ -44,7 +45,7 @@ public class DisplayManager {
         return newImage;
     }
 
-    public static void addToImage (Drawable drawable, Color[][] baseImage)
+    public static void addToImage (DrawableBehavior drawable, Color[][] baseImage)
     {
         Color[][] additionalImage;
         int i = (int) drawable.getPosition().getI();
@@ -59,10 +60,8 @@ public class DisplayManager {
                 if((i+k<=baseImage.length-1) && (j+l<=baseImage[0].length-1))
                 {baseImage[i+k][j+l] = additionalImage[k][l];}
             }
-
         }
     }
-
 
     public static void display(ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers)
     {
