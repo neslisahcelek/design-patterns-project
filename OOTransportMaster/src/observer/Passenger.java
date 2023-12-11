@@ -11,20 +11,12 @@ public class Passenger extends IPassenger implements Observer {
 
     public Passenger(int station, double positionI, double positionJ) {
         super.station = station;
-        super.drawableBehavior = new DrawablePassenger();
+        super.drawableBehavior = new DrawablePassenger(positionI, positionJ);
     }
 
     @Override
     public void update() {
         //shuttle start, phone light on
-    }
-
-    public int getLocation() {
-        return location;
-    }
-
-    public void setLocation(int i) {
-        location = i;
     }
 
     public DrawableBehavior getDrawable() {return drawable;}
