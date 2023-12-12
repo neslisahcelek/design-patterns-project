@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Input
 {
+
     public static ArrayList<Click> clicks = new ArrayList<>();
 
     public static void mouseEvent(Frame frame)
@@ -20,10 +21,12 @@ public class Input
             public void mouseClicked(MouseEvent e) {
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    clicks.add(new Click(e.getX(),e.getY(),true));
+                    System.out.println("sol tık");
+                    clicks.add(new Click(e.getY(),e.getX(),true));
                 }
                 else if (e.getButton() == MouseEvent.BUTTON3) {
-                    clicks.add(new Click(e.getX(),e.getY(),false));
+                    System.out.println("sağ tık");
+                    clicks.add(new Click(e.getY(),e.getX(),false));
                 }
             }
         });

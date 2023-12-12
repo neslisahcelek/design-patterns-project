@@ -43,8 +43,6 @@ public class Display {
     {
         JLabel label = createLabel(20,20,200,30,"neden");
 
-        Input.mouseEvent(frame);
-
     }
 
     public static void addToImage (DrawableBehavior drawable, Color[][] baseImage)
@@ -54,15 +52,32 @@ public class Display {
         int j = (int) drawable.getPosition().getJ();
         int type = drawable.getType();
 
-        if(type == 2) {additionalImage = Image.getPassenger();}
-        else {additionalImage = Image.getShuttle();}
+        if(type == 2) {
+            additionalImage = Image.getPassenger();
+            i=i-21;
+            j=j-8;
+        }
+        else {additionalImage = Image.getShuttle();
+            i=i-17;
+            j=j-50;
+        }
 
         for (int k = 0; k < additionalImage.length ; k++) {
             for (int l = 0; l < additionalImage[0].length; l++) {
-                if((i+k<=baseImage.length-1) && (j+l<=baseImage[0].length-1))
+                if(isValidPosition(i+k,j+l,baseImage) && !additionalImage[k][l].equals(new Color(255, 255, 255)))
                 {baseImage[i+k][j+l] = additionalImage[k][l];}
             }
         }
+    }
+
+    static boolean isValidPosition (int i, int j, Color[][] addition)
+    {
+        return isValidPosition(i,j,addition.length-1,addition[0].length-1);
+    }
+
+    static boolean isValidPosition (int i, int j,int fieldI, int fieldJ)
+    {
+        return i>=0 && fieldI>=i && j>=0 && fieldJ>=j;
     }
 
 
@@ -82,7 +97,6 @@ public class Display {
 
     public static void updateDrawableArrayList (ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers) {
 
-        System.out.println(passengers.get(0).getStation()+"pass geliyormu");
         drawableArrayList.clear();
 
         for (Shuttle s : shuttles) {
@@ -92,8 +106,6 @@ public class Display {
         for (Passenger p : passengers) {
             drawableArrayList.add(p.getDrawable());
         }
-
-        System.out.println(drawableArrayList.get(0)+"aaa");
 
         Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
     }
@@ -107,4 +119,10 @@ public class Display {
     {
         panel.setColors(colors);
     }
+
+
+    public Frame getFrame() {
+        return frame;
+    }
+
 }

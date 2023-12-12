@@ -21,7 +21,9 @@ public class Image
     private static Color[][] map;
     private static Color[][] shuttle;
 
-    private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\png\\";
+    private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
+
+
 
     public static Color[][] getMap() {
         if (map == null) {
@@ -67,7 +69,7 @@ public class Image
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int rgb = image.getRGB(x,y);
-                colors[y][x] = new Color(rgb, true);
+                colors[y][x] = new Color(rgb);
             }
         }
 

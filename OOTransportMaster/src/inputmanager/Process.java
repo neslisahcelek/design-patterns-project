@@ -20,6 +20,8 @@ public class Process {
 
     public static void mainly()
     {
+        System.out.println(Image.getPassenger()[0][0]);
+        System.out.println(Image.getPassenger()[0][1]);
         //Process.addShuttle(1,1);
         Process.addPassenger(223,775);
 
@@ -53,14 +55,14 @@ public class Process {
         Display display1 = new Display();
         display1.createDisplay(Image.getMap());
 
-
+        Input.mouseEvent(display1.getFrame());
 
         Timer timer = new Timer(100, e -> {
 
-            System.out.println("asa");
             display1.updateDisplay(Display.updateImage(Process.shuttles,Process.passengers));
-            //Process.applyAddRequests();
 
+
+            Process.checkAddRequests();
 
         });
         timer.setInitialDelay(0);
@@ -75,11 +77,11 @@ public class Process {
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);}
-        System.out.println(passengers.get(0).getStation());
+        // hep çalışıyor
     }
 
     private static int findClosestStation(int positionI,int positionJ) {
-        double min = Double.MAX_VALUE;
+        double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
 
         for (int i = 0; i < Station.stations.length ; i++) {
@@ -88,7 +90,8 @@ public class Process {
                     Math.pow(Station.stations[i].getLocationI() - positionI, 2) +
                             Math.pow(Station.stations[i].getLocationJ() - positionJ, 2));
 
-            if(currentDistance < min ) { min = currentDistance; closestStation = i; }
+            if(currentDistance < minDistance )
+            { minDistance = currentDistance; closestStation = i; }
         }
 
         return closestStation;
@@ -110,7 +113,7 @@ public class Process {
 
     static boolean isValid(int positionI,int positionJ)
     {
-        int range = 200;
+        int range = 100;
 
         for (int i = 0; i < Station.stations.length ; i++) {
             if(range >= Math.sqrt(
@@ -136,10 +139,19 @@ public class Process {
 
     public static void applyAddRequests()
     {
-        for (Click click : Input.getClicks()) {
-
+        while(Input.getClicks().size()>0)
+        {
+            Click click = Input.getClicks().get(0);
             Process.addPassenger(click.i,click.j);
+            Input.getClicks().remove(click);
+        }
+    }
 
+    public static void checkAddRequests()
+    {
+        if(0 != Input.getClicks().size())
+        {
+            applyAddRequests();
         }
     }
 }

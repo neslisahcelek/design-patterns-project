@@ -7,8 +7,8 @@ public class Click {
     boolean rightClick;
 
     public Click(int i, int j, boolean rightClick) {
-        this.i = i;
-        this.j = j;
+        this.i = i-28;
+        this.j = j-7;
         this.rightClick = rightClick;
     }
 
