@@ -22,11 +22,11 @@ public class Input
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("sol tık");
-                    clicks.add(new Click(e.getX(),e.getY(),true));
+                    clicks.add(new Click(e.getY(),e.getX(),true));
                 }
                 else if (e.getButton() == MouseEvent.BUTTON3) {
                     System.out.println("sağ tık");
-                    clicks.add(new Click(e.getX(),e.getY(),false));
+                    clicks.add(new Click(e.getY(),e.getX(),false));
                 }
             }
         });
