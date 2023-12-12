@@ -1,7 +1,7 @@
 package inputmanager;
 
 import display.Frame;
-import observer.Passenger;
+import observer.passenger.Passenger;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

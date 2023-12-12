@@ -4,8 +4,8 @@ import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
-import observer.Passenger;
-import observer.Shuttle;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
 
 import java.util.ArrayList;
@@ -19,10 +19,7 @@ public class Process {
     public static void mainly()
     {
         //Process.addShuttle(1,1);
-        Process.addPassenger(2,3);
-        Process.addPassenger(2,3);
-        Process.addPassenger(2,3);
-        Process.addPassenger(2,3);
+        Process.addPassenger(100,100);
 
         for (Passenger p : passengers) {
             callCommand(shuttles.get(0), p);

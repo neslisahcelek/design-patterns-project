@@ -3,8 +3,8 @@ package display;
 import display.drawable.DrawableBehavior;
 import inputmanager.Input;
 import inputmanager.Process;
-import observer.Passenger;
-import observer.Shuttle;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +19,10 @@ public class Display {
 
     public static void display()
     {
+
         Display display1 = new Display();
-        display1.createDisplay(Image.getMap());
+        display1.createDisplay(Image.getImages().getMap());
+
 
 
         Timer timer = new Timer(100, e -> {
