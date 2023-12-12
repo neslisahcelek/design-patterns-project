@@ -53,14 +53,14 @@ public class Process {
         Display display1 = new Display();
         display1.createDisplay(Image.getMap());
 
-
+        Input.mouseEvent(display1.getFrame());
 
         Timer timer = new Timer(100, e -> {
 
-            System.out.println("asa");
             display1.updateDisplay(Display.updateImage(Process.shuttles,Process.passengers));
-            //Process.applyAddRequests();
 
+
+            Process.applyAddRequests();
 
         });
         timer.setInitialDelay(0);
@@ -75,7 +75,7 @@ public class Process {
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);}
-        System.out.println(passengers.get(0).getStation());
+        // hep çalışıyor
     }
 
     private static int findClosestStation(int positionI,int positionJ) {
@@ -110,7 +110,7 @@ public class Process {
 
     static boolean isValid(int positionI,int positionJ)
     {
-        int range = 200;
+        int range = 100;
 
         for (int i = 0; i < Station.stations.length ; i++) {
             if(range >= Math.sqrt(
@@ -138,7 +138,7 @@ public class Process {
     {
         for (Click click : Input.getClicks()) {
 
-            Process.addPassenger(click.i,click.j);
+            Process.addPassenger(click.j,click.i);
 
         }
     }

@@ -43,8 +43,6 @@ public class Display {
     {
         JLabel label = createLabel(20,20,200,30,"neden");
 
-        Input.mouseEvent(frame);
-
     }
 
     public static void addToImage (DrawableBehavior drawable, Color[][] baseImage)
@@ -82,7 +80,6 @@ public class Display {
 
     public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
 
-        System.out.println(passenger.get(0).getStation()+"pass geliyormu");
         drawableArrayList.clear();
 
         for (Object obj : shuttle) {
@@ -98,8 +95,6 @@ public class Display {
             }
         }
 
-        System.out.println(drawableArrayList.get(0)+"aaa");
-
         Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
     }
     public void createDisplay(Color [][] colors)
@@ -113,8 +108,8 @@ public class Display {
         panel.setColors(colors);
     }
 
-
-
-
+    public Frame getFrame() {
+        return frame;
+    }
 
 }
