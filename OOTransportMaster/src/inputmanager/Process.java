@@ -121,10 +121,10 @@ public class Process {
         return false;
     }
 
-    /*
+
     static void addShuttle(int positionI, int positionJ)
     {
-        Shuttle shuttle = new Shuttle(new MovableShuttle(positionI,positionJ),new DrawableShuttleBehavior(positionI,positionJ));
+        Shuttle shuttle = new Shuttle(positionI,positionJ);
         shuttles.add(shuttle);
 
         //shuttle.getMovable().setVelocityDirection(Motion.calculateVelocityDirection(shuttle.getMovable(),5,5));
@@ -133,7 +133,7 @@ public class Process {
         //shuttle.updatePosition(Motion.calculateNextPositionWithDestination( shuttle.getMovable(),20,20));
 
     }
-*/
+
     public static void applyAddRequests()
     {
         for (Click click : Input.getClicks()) {
