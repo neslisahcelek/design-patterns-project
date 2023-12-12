@@ -78,21 +78,16 @@ public class Display {
         return newImage;
     }
 
-    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers) {
 
         drawableArrayList.clear();
 
-        for (Object obj : shuttle) {
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
+        for (Shuttle s : shuttles) {
+            drawableArrayList.add(s.getDrawable());
         }
 
-        for (Object obj : passenger) {
-
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
+        for (Passenger p : passengers) {
+            drawableArrayList.add(p.getDrawable());
         }
 
         Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
@@ -107,6 +102,7 @@ public class Display {
     {
         panel.setColors(colors);
     }
+
 
     public Frame getFrame() {
         return frame;
