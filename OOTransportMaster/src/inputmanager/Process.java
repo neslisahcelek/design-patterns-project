@@ -4,10 +4,12 @@ import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
+import display.Image;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Process {
@@ -19,12 +21,14 @@ public class Process {
     public static void mainly()
     {
         //Process.addShuttle(1,1);
-        Process.addPassenger(100,100);
+        Process.addPassenger(223,775);
 
+        display();
+        /*
         for (Passenger p : passengers) {
             callCommand(shuttles.get(0), p);
         }
-
+*/
         /*
         int i = 3;
         for (Passenger p : passengers) {
@@ -41,14 +45,53 @@ public class Process {
         sm.findShortestRoute(passengers, 1, route);
          */
 
-        Display.display();
+    }
+
+    public static void display()
+    {
+        //Image.getImages();
+        Display display1 = new Display();
+        display1.createDisplay(Image.getMap());
+
+
+
+        Timer timer = new Timer(100, e -> {
+
+            System.out.println("asa");
+            display1.updateDisplay(Display.updateImage(Process.shuttles,Process.passengers));
+            //Process.applyAddRequests();
+
+
+        });
+        timer.setInitialDelay(0);
+        timer.start();
     }
 
     static void addPassenger(int positionI, int positionJ)
     {
-        if(isValid(positionI,positionJ))
-        {Passenger passenger = new Passenger(1,positionI,positionJ);
+
+        if(isValid(positionI,positionJ)) {
+            System.out.println("valid");
+            int station = findClosestStation(positionI,positionJ);
+            Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);}
+        System.out.println(passengers.get(0).getStation());
+    }
+
+    private static int findClosestStation(int positionI,int positionJ) {
+        double min = Double.MAX_VALUE;
+        int closestStation = 0;
+
+        for (int i = 0; i < Station.stations.length ; i++) {
+
+            double currentDistance = Math.sqrt(
+                    Math.pow(Station.stations[i].getLocationI() - positionI, 2) +
+                            Math.pow(Station.stations[i].getLocationJ() - positionJ, 2));
+
+            if(currentDistance < min ) { min = currentDistance; closestStation = i; }
+        }
+
+        return closestStation;
     }
 
     static void callCommand(Shuttle shuttle, Passenger passenger) {
@@ -67,7 +110,7 @@ public class Process {
 
     static boolean isValid(int positionI,int positionJ)
     {
-        int range = 5;
+        int range = 200;
 
         for (int i = 0; i < Station.stations.length ; i++) {
             if(range >= Math.sqrt(
