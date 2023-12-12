@@ -13,74 +13,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Display {
-    Frame frame;
-    Panel panel;
+    private Frame frame;
+    private Panel panel;
     static ArrayList<DrawableBehavior> drawableArrayList = new ArrayList<>();
-
-    public static void display()
-    {
-
-        Display display1 = new Display();
-        display1.createDisplay(Image.getImages().getMap());
-
-
-
-        Timer timer = new Timer(100, e -> {
-
-            display1.updateDisplay(updateImage(Process.shuttles,Process.passengers));
-            Process.applyAddRequests();
-
-            //  colorArray[y][x] = Color.RED;
-            //  Display.updateDisplay(colorArray);
-
-        });
-        timer.setInitialDelay(0);
-        timer.start();
-    }
-
-    public static Color[][] updateImage (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
-
-        Color[][] newImage = Image.getMap();
-
-        updateDrawableArrayList(shuttle,passenger);
-
-        for (int i = 0; i < drawableArrayList.size(); i++) {
-
-            Display.addToImage(drawableArrayList.get(i),newImage);
-        }
-
-        return newImage;
-    }
-
-    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
-
-        drawableArrayList.clear();
-
-        for (Object obj : shuttle) {
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
-        }
-
-        for (Object obj : passenger) {
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
-        }
-
-        Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
-    }
-
-    void createDisplay(Color [][] colors)
-    {
-        panel = new Panel(colors);
-        frame = new Frame(panel);
-    }
-
-    void updateDisplay(Color [][] colors)
-    {
-        panel.setColors(colors);
-    }
 
     JLabel createLabel(int x, int y, int width, int height, String text)
     {
@@ -129,6 +64,55 @@ public class Display {
             }
         }
     }
+
+
+    public static Color[][] updateImage (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+
+        Color[][] newImage = Image.getMap();
+
+        updateDrawableArrayList(shuttle,passenger);
+
+        for (int i = 0; i < drawableArrayList.size(); i++) {
+
+            Display.addToImage(drawableArrayList.get(i),newImage);
+        }
+
+        return newImage;
+    }
+
+    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+
+        System.out.println(passenger.get(0).getStation()+"pass geliyormu");
+        drawableArrayList.clear();
+
+        for (Object obj : shuttle) {
+            if (obj instanceof DrawableBehavior) {
+                drawableArrayList.add((DrawableBehavior) obj);
+            }
+        }
+
+        for (Object obj : passenger) {
+
+            if (obj instanceof DrawableBehavior) {
+                drawableArrayList.add((DrawableBehavior) obj);
+            }
+        }
+
+        System.out.println(drawableArrayList.get(0)+"aaa");
+
+        Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
+    }
+    public void createDisplay(Color [][] colors)
+    {
+        panel = new Panel(colors);
+        frame = new Frame(panel);
+    }
+
+    public void updateDisplay(Color [][] colors)
+    {
+        panel.setColors(colors);
+    }
+
 
 
 
