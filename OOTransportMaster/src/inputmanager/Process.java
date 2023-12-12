@@ -20,6 +20,8 @@ public class Process {
 
     public static void mainly()
     {
+        System.out.println(Image.getPassenger()[0][0]);
+        System.out.println(Image.getPassenger()[0][1]);
         //Process.addShuttle(1,1);
         Process.addPassenger(223,775);
 
@@ -60,7 +62,7 @@ public class Process {
             display1.updateDisplay(Display.updateImage(Process.shuttles,Process.passengers));
 
 
-            Process.applyAddRequests();
+            Process.checkAddRequests();
 
         });
         timer.setInitialDelay(0);
@@ -79,7 +81,7 @@ public class Process {
     }
 
     private static int findClosestStation(int positionI,int positionJ) {
-        double min = Double.MAX_VALUE;
+        double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
 
         for (int i = 0; i < Station.stations.length ; i++) {
@@ -88,7 +90,8 @@ public class Process {
                     Math.pow(Station.stations[i].getLocationI() - positionI, 2) +
                             Math.pow(Station.stations[i].getLocationJ() - positionJ, 2));
 
-            if(currentDistance < min ) { min = currentDistance; closestStation = i; }
+            if(currentDistance < minDistance )
+            { minDistance = currentDistance; closestStation = i; }
         }
 
         return closestStation;
@@ -136,10 +139,19 @@ public class Process {
 
     public static void applyAddRequests()
     {
-        for (Click click : Input.getClicks()) {
+        while(Input.getClicks().size()>0)
+        {
+            Click click = Input.getClicks().get(0);
+            Process.addPassenger(click.i,click.j);
+            Input.getClicks().remove(click);
+        }
+    }
 
-            Process.addPassenger(click.j,click.i);
-
+    public static void checkAddRequests()
+    {
+        if(0 != Input.getClicks().size())
+        {
+            applyAddRequests();
         }
     }
 }
