@@ -80,22 +80,17 @@ public class Display {
         return newImage;
     }
 
-    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers) {
 
-        System.out.println(passenger.get(0).getStation()+"pass geliyormu");
+        System.out.println(passengers.get(0).getStation()+"pass geliyormu");
         drawableArrayList.clear();
 
-        for (Object obj : shuttle) {
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
+        for (Shuttle s : shuttles) {
+            drawableArrayList.add(s.getDrawable());
         }
 
-        for (Object obj : passenger) {
-
-            if (obj instanceof DrawableBehavior) {
-                drawableArrayList.add((DrawableBehavior) obj);
-            }
+        for (Passenger p : passengers) {
+            drawableArrayList.add(p.getDrawable());
         }
 
         System.out.println(drawableArrayList.get(0)+"aaa");
@@ -112,9 +107,4 @@ public class Display {
     {
         panel.setColors(colors);
     }
-
-
-
-
-
 }
