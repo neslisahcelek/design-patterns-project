@@ -1,8 +1,6 @@
 package display;
 
 import display.drawable.DrawableBehavior;
-import inputmanager.Input;
-import inputmanager.Process;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 

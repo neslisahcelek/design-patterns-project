@@ -1,10 +1,10 @@
-package inputmanager;
-
 import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
+import inputmanager.Click;
+import inputmanager.Input;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
@@ -142,7 +142,7 @@ public class Process {
         while(Input.getClicks().size()>0)
         {
             Click click = Input.getClicks().get(0);
-            Process.addPassenger(click.i,click.j);
+            Process.addPassenger(click.getI(), click.getJ());
             Input.getClicks().remove(click);
         }
     }
