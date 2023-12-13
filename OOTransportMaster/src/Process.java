@@ -3,9 +3,10 @@ import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
-import motion.movable.MovableBehavior;
+import movement.movable.MovableBehavior;
 import inputmanager.Click;
 import inputmanager.Input;
+import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
@@ -73,7 +74,7 @@ public class Process {
 
     static Color[][] getCurrentDisplay()
     {
-        return Display.updateImage(Process.shuttles,Process.passengers);
+        return Display.updateImage();
     }
 
     static void addPassenger(int positionI, int positionJ)
@@ -94,8 +95,6 @@ public class Process {
 
     private static Passenger findClosestPassanger(int positionI,int positionJ) {
 
-
-
         double minDistance = Double.MAX_VALUE;
         Passenger closestPassenger= null;
 
@@ -115,9 +114,6 @@ public class Process {
         System.out.println("ben en yakın passangerdım ölüyorum" + closestPassenger.getDrawable().getPosition().getJ());
         return closestPassenger;
     }
-
-
-
 
 
 
@@ -199,7 +195,7 @@ public class Process {
         {
             Click click = Input.getClicks().get(0);
 
-            if(click.rightClick)
+            if(click.isRightClick())
             {Process.removePassenger(click.getI(), click.getJ());}
             else{Process.addPassenger(click.getI(), click.getJ());}
            
@@ -214,6 +210,17 @@ public class Process {
             applyRequests();
         }
     }
+
+    public static ArrayList<Passenger> getPassengers() {
+        return passengers;
+    }
+    //bunlar sadece dönse ama asıl array değiştirilebiliyor input classına bak
+
+    public static ArrayList<Shuttle> getShuttles() {
+        return shuttles;
+    }
+
+
 }
 
 

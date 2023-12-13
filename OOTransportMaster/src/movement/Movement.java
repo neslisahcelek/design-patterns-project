@@ -1,8 +1,20 @@
 package movement;
 
+import display.Display;
+import display.Image;
+import display.drawable.DrawableBehavior;
 import movement.movable.MovableBehavior;
+import observer.passenger.Passenger;
+import observer.shuttle.Shuttle;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Movement {
+
+    static ArrayList<MovableBehavior> movableArrayList = new ArrayList<>();
     public static VelocityDirection calculateVelocityDirection(MovableBehavior movable, double endI, double endJ)
     {
         double startI = movable.getPosition().getI();
@@ -77,6 +89,33 @@ public class Movement {
         }
 
         return new Position(newPositionI,newPositionJ);
+
+    }
+
+
+    public static void updateMovableArrayList ( ) {
+
+
+        movableArrayList.clear();
+
+        for (Shuttle s : Process.shuttles) { //yanlış process sınıfı
+            movableArrayList.add(s.getMovable());
+        }
+
+        for (Passenger p : Process.passengers) {
+            movableArrayList.add(p.getMovable());
+        }
+    }
+
+
+    public static void updatePositions () {
+
+        updateMovableArrayList();
+
+        for (int i = 0; i < movableArrayList.size(); i++) {
+            //tüm movable olanların hızına hız yönünde göre yeni konumlarını atar
+        }
+        // hız atamaları ve diğer ler başka yerde
 
     }
 
