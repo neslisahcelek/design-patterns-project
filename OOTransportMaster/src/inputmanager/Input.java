@@ -21,12 +21,10 @@ public class Input
             public void mouseClicked(MouseEvent e) {
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("sol tık");
-                    clicks.add(new Click(e.getY(),e.getX(),true));
+                    clicks.add(new Click(e.getY(),e.getX(),false));
                 }
                 else if (e.getButton() == MouseEvent.BUTTON3) {
-                    System.out.println("sağ tık");
-                    clicks.add(new Click(e.getY(),e.getX(),false));
+                    clicks.add(new Click(e.getY(),e.getX(),true));
                 }
             }
         });
