@@ -79,11 +79,11 @@ public class Display {
     }
 
 
-    public static Color[][] updateImage (ArrayList<Shuttle> shuttle, ArrayList<Passenger> passenger) {
+    public static Color[][] updateImage () {
 
         Color[][] newImage = Image.getMap();
 
-        updateDrawableArrayList(shuttle,passenger);
+        updateDrawableArrayList();
 
         for (int i = 0; i < drawableArrayList.size(); i++) {
 
@@ -93,15 +93,15 @@ public class Display {
         return newImage;
     }
 
-    public static void updateDrawableArrayList (ArrayList<Shuttle> shuttles, ArrayList<Passenger> passengers) {
+    public static void updateDrawableArrayList () {
 
         drawableArrayList.clear();
 
-        for (Shuttle s : shuttles) {
+        for (Shuttle s : Process.shuttles) {
             drawableArrayList.add(s.getDrawable());
         }
 
-        for (Passenger p : passengers) {
+        for (Passenger p : Process.passengers) {
             drawableArrayList.add(p.getDrawable());
         }
 
