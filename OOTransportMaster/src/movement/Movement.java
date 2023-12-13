@@ -1,8 +1,8 @@
-package motion;
+package movement;
 
-import motion.movable.MovableBehavior;
+import movement.movable.MovableBehavior;
 
-public class Motion {
+public class Movement {
     public static VelocityDirection calculateVelocityDirection(MovableBehavior movable, double endI, double endJ)
     {
         double startI = movable.getPosition().getI();

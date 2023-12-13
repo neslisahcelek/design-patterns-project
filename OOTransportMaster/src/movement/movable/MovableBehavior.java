@@ -1,7 +1,7 @@
-package motion.movable;
+package movement.movable;
 
-import motion.Position;
-import motion.VelocityDirection;
+import movement.Position;
+import movement.VelocityDirection;
 
 public interface MovableBehavior {
         Position getPosition();
