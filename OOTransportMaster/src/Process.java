@@ -1,11 +1,11 @@
-package inputmanager;
-
 import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
 import motion.movable.MovableBehavior;
+import inputmanager.Click;
+import inputmanager.Input;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
@@ -191,9 +191,9 @@ public class Process {
             Click click = Input.getClicks().get(0);
 
             if(click.rightClick)
-            {Process.removePassenger(click.i,click.j);}
-            else{Process.addPassenger(click.i,click.j);}
-
+            {Process.removePassenger(click.getI(), click.getJ());}
+            else{Process.addPassenger(click.getI(), click.getJ());}
+           
             Input.getClicks().remove(click);
         }
     }

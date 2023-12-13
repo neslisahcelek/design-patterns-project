@@ -1,4 +1,4 @@
-package motion;
+package movement;
 
 public class Position {
     public Position(double i, double j) {

@@ -2,9 +2,9 @@ package inputmanager;
 
 public class Click {
 
-    int i;
-    int j;
-    boolean rightClick;
+    private int i;
+    private int j;
+    private boolean rightClick;
 
     public Click(int i, int j, boolean rightClick) {
         this.i = i-28;

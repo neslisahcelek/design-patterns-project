@@ -1,6 +1,6 @@
 package display.drawable;
 
-import motion.Position;
+import movement.Position;
 
 public interface DrawableBehavior {
     Position getPosition();
