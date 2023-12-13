@@ -1,8 +1,8 @@
 package observer.shuttle;
 
 import display.drawable.DrawableBehavior;
-import motion.Position;
-import motion.movable.MovableBehavior;
+import movement.Position;
+import movement.movable.MovableBehavior;
 
 public abstract class IShuttle {
     DrawableBehavior drawable;
@@ -13,9 +13,7 @@ public abstract class IShuttle {
 
     public DrawableBehavior getDrawable() {return drawable;}
 
-    public MovableBehavior getMovable() {
-        return movable;
-    }
+    public MovableBehavior getMovable() {return movable;}
 
     public void updatePosition(Position position)
     {
