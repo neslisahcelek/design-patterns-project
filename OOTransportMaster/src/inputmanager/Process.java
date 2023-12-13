@@ -11,6 +11,7 @@ import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Process {
@@ -52,19 +53,27 @@ public class Process {
     public static void display()
     {
         //Image.getImages();
-        Display display1 = new Display();
-        display1.createDisplay(Image.getMap());
+        Display display = new Display();
 
-        Input.mouseEvent(display1.getFrame());
+        display.createDisplay( Image.getMap());
+
+        Input.mouseEvent(display.getFrame());
+
+
 
         Timer timer = new Timer(100, e -> {
 
-            display1.updateDisplay(Display.updateImage(shuttles,passengers));
+            display.updateDisplay(getCurrentDisplay());
             Process.checkClickRequests();
 
         });
         timer.setInitialDelay(0);
         timer.start();
+    }
+
+    static Color[][] getCurrentDisplay()
+    {
+        return Display.updateImage(Process.shuttles,Process.passengers);
     }
 
     static void addPassenger(int positionI, int positionJ)
