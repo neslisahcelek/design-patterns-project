@@ -1,4 +1,4 @@
-package motion;
+package movement;
 
 public class VelocityDirection {
     private double i;

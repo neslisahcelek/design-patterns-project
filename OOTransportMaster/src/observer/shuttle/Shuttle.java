@@ -1,10 +1,9 @@
 package observer.shuttle;
 
 import display.drawable.DrawableShuttle;
-import motion.movable.MovableShuttle;
+import movement.movable.MovableShuttle;
 import observer.Observer;
 import observer.Subject;
-import observer.shuttle.IShuttle;
 
 import java.util.ArrayList;
 
