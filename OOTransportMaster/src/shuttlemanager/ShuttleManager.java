@@ -39,6 +39,15 @@ public class ShuttleManager {
 
         findShortestRoute(passengers, closestPassenger.location, route);
     }
+
+    public void shuttleE()
+    {
+        //shuttle.getMovable().setVelocityDirection(Motion.calculateVelocityDirection(shuttle.getMovable(),5,5));
+        shuttle.getMovable().setSpeed(5);
+        System.out.println( shuttle.getMovable().getPosition().getI() + " " +  shuttle.getMovable().getPosition().getJ());
+        //shuttle.updatePosition(Motion.calculateNextPositionWithDestination( shuttle.getMovable(),20,20));
+
+    }
 }
 
 class ClosestPassenger {
