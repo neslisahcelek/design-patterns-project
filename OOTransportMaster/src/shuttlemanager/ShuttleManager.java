@@ -49,13 +49,3 @@ public class ShuttleManager {
 
     }
 }
-
-class ClosestPassenger {
-    Passenger passenger;
-    int location;
-
-    public ClosestPassenger(Passenger passenger, int location) {
-        this.passenger = passenger;
-        this.location = location;
-    }
-}

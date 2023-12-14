@@ -3,6 +3,7 @@ package display;
 import display.drawable.DrawableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import manager.Process;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +87,6 @@ public class Display {
         updateDrawableArrayList();
 
         for (int i = 0; i < drawableArrayList.size(); i++) {
-
             Display.addToImage(drawableArrayList.get(i),newImage);
         }
 
@@ -97,6 +97,8 @@ public class Display {
 
         drawableArrayList.clear();
 
+        System.out.println("çizilen sayısı sıfırlandı "+drawableArrayList.size());
+
         for (Shuttle s : Process.shuttles) {
             drawableArrayList.add(s.getDrawable());
         }
@@ -106,6 +108,7 @@ public class Display {
         }
 
         Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
+        System.out.println("çizilen sayısı "+drawableArrayList.size());
     }
     public void createDisplay(Color [][] colors)
     {

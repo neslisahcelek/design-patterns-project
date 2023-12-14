@@ -1,16 +1,12 @@
 package movement;
 
-import display.Display;
-import display.Image;
-import display.drawable.DrawableBehavior;
 import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import manager.Process;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
 
 public class Movement {
 
