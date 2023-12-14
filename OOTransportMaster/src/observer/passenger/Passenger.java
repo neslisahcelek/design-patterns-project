@@ -2,6 +2,7 @@ package observer.passenger;
 
 
 import display.drawable.DrawablePassenger;
+import movement.movable.MovablePassenger;
 import observer.Observer;
 
 public class Passenger extends IPassenger implements Observer {
@@ -10,6 +11,7 @@ public class Passenger extends IPassenger implements Observer {
     public Passenger(int station, double positionI, double positionJ) {
         super.station = station;
         super.drawable = new DrawablePassenger(positionI, positionJ);
+        super.movable = new MovablePassenger(positionI, positionJ);
     }
 
     @Override
