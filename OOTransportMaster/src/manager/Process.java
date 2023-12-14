@@ -1,3 +1,5 @@
+package manager;
+
 import command.Command;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
@@ -6,7 +8,6 @@ import display.Image;
 import movement.movable.MovableBehavior;
 import inputmanager.Click;
 import inputmanager.Input;
-import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Station;
@@ -56,10 +57,9 @@ public class Process {
         //Image.getImages();
         Display display = new Display();
 
-        display.createDisplay( Image.getMap());
+        display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
-
 
 
         Timer timer = new Timer(100, e -> {
@@ -82,36 +82,38 @@ public class Process {
         if(isValid(positionI,positionJ)) {
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
-            passengers.add(passenger);}
+            passengers.add(passenger);
+            System.out.println("passanger eklendi "+ passengers.size());}
     }
     static void removePassenger(int positionI, int positionJ)
     {
-        if(passengers.size()>0)
-        {
-        Passenger passenger = findClosestPassanger(positionI,positionJ);
-        passengers.remove(passenger);}
+        if(passengers.size()>0) {
+            Passenger passenger = findClosestPassenger(positionI, positionJ);
+            passengers.remove(passenger);
+            System.out.println("passanger kaldırıldı " + passengers.size());
+        }
     }
 
 
-    private static Passenger findClosestPassanger(int positionI,int positionJ) {
+    private static Passenger findClosestPassenger(int positionI,int positionJ) {
 
         double minDistance = Double.MAX_VALUE;
         Passenger closestPassenger= null;
 
-        //movable passanger aç, movable dan çek koordinatı
-        //passengers.get(i).getDrawable().getPosition().getI()
-
         for (int i = 0; i < passengers.size() ; i++) {
 
-            double currentDistance = Math.sqrt(
-                    Math.pow(passengers.get(i).getDrawable().getPosition().getI() - positionI, 2) +
-                            Math.pow(passengers.get(i).getDrawable().getPosition().getJ() - positionJ, 2));
+
+            double currentDistance = findDistance(
+                    (int) passengers.get(i).getMovable().getPosition().getI(),
+                    (int) passengers.get(i).getMovable().getPosition().getJ(),
+                    positionI, positionJ);
+
 
             if(currentDistance < minDistance )
             { minDistance = currentDistance; closestPassenger = passengers.get(i); }
         }
 
-        System.out.println("ben en yakın passangerdım ölüyorum" + closestPassenger.getDrawable().getPosition().getJ());
+        System.out.println("ben en yakın passangerdım ölüyorum" + closestPassenger.getMovable().getPosition().getJ());
         return closestPassenger;
     }
 
@@ -123,9 +125,8 @@ public class Process {
 
         for (int i = 0; i < Station.stations.length ; i++) {
 
-            double currentDistance = Math.sqrt(
-                    Math.pow(Station.stations[i].getLocationI() - positionI, 2) +
-                            Math.pow(Station.stations[i].getLocationJ() - positionJ, 2));
+            double currentDistance = findDistance(Station.stations[i].getLocationI(),
+                    Station.stations[i].getLocationJ(),positionI,positionJ);
 
             if(currentDistance < minDistance )
             { minDistance = currentDistance; closestStation = i; }
@@ -134,24 +135,13 @@ public class Process {
         return closestStation;
     }
 
-    private static MovableBehavior findClosestMovable(
-            ArrayList<MovableBehavior> movables, int positionI, int positionJ)
+    private static double findDistance(int arrayPositionI, int arrayPositionJ, int positionI,int positionJ)
     {
-        double minDistance = Double.MAX_VALUE;
-        MovableBehavior closestMovable = null;
-
-        for (int i = 0; i < movables.size() ; i++) {
-
-            double currentDistance = Math.sqrt(
-                    Math.pow(movables.get(i).getPosition().getI() - positionI, 2) +
-                            Math.pow(movables.get(i).getPosition().getJ() - positionJ, 2));
-
-            if(currentDistance < minDistance )
-            { minDistance = currentDistance; closestMovable = movables.get(i) ; }
-        }
-
-        return closestMovable;
+            return Math.sqrt(Math.pow(arrayPositionI - positionI, 2) +
+                            Math.pow(arrayPositionJ - positionJ, 2));
     }
+
+
 
 
 
@@ -197,7 +187,8 @@ public class Process {
 
             if(click.isRightClick())
             {Process.removePassenger(click.getI(), click.getJ());}
-            else{Process.addPassenger(click.getI(), click.getJ());}
+            else{Process.addPassenger(click.getI(), click.getJ());
+            }
            
             Input.getClicks().remove(click);
         }
