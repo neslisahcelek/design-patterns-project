@@ -36,8 +36,6 @@ public class Display {
         frame.add(label);
     }
 
-
-
     void mainExample()
     {
         JLabel label = createLabel(20,20,200,30,"neden");
@@ -74,30 +72,20 @@ public class Display {
         return isValidPosition(i,j,addition.length-1,addition[0].length-1);
     }
 
-    static boolean isValidPosition (int i, int j,int fieldI, int fieldJ)
-    {
+    static boolean isValidPosition (int i, int j,int fieldI, int fieldJ) {
         return i>=0 && fieldI>=i && j>=0 && fieldJ>=j;
     }
 
+    public static void updateImage (Color[][] newImage) {
 
-    public static Color[][] updateImage () {
-
-        Color[][] newImage = Image.getMap();
-
-        updateDrawableArrayList();
-
-        for (int i = 0; i < drawableArrayList.size(); i++) {
-            Display.addToImage(drawableArrayList.get(i),newImage);
+        for (DrawableBehavior drawableBehavior : drawableArrayList) {
+            Display.addToImage(drawableBehavior, newImage);
         }
-
-        return newImage;
     }
 
     public static void updateDrawableArrayList () {
 
         drawableArrayList.clear();
-
-        System.out.println("çizilen sayısı sıfırlandı "+drawableArrayList.size());
 
         for (Shuttle s : Process.shuttles) {
             drawableArrayList.add(s.getDrawable());
@@ -107,11 +95,14 @@ public class Display {
             drawableArrayList.add(p.getDrawable());
         }
 
-        Collections.sort(drawableArrayList, Comparator.comparingDouble(d -> d.getPosition().getI()));
-        System.out.println("çizilen sayısı "+drawableArrayList.size());
+        drawableArrayList.sort(Comparator.comparingDouble(d -> d.getPosition().getI()));
     }
-    public void createDisplay(Color [][] colors)
-    {
+
+
+
+
+
+    public void createDisplay(Color [][] colors) {
         panel = new Panel(colors);
         frame = new Frame(panel);
     }
@@ -120,7 +111,6 @@ public class Display {
     {
         panel.setColors(colors);
     }
-
 
     public Frame getFrame() {
         return frame;
