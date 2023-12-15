@@ -1,14 +1,13 @@
 package display;
 
 import display.drawable.DrawableBehavior;
+import manager.Process;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
-import manager.Process;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Display {
