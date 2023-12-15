@@ -15,12 +15,14 @@ import shuttlemanager.Station;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Process {
 
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
     private static ShuttleApp shuttleApp = new ShuttleApp();
+    private static Color[][] newImage = new Color[Image.getMap().length][Image.getMap()[0].length];
 
     public static void mainly()
     {
@@ -74,7 +76,12 @@ public class Process {
 
     static Color[][] getCurrentDisplay()
     {
-        return Display.updateImage();
+        // Color[][] newImage = Image.getMap();
+        newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
+
+        Display.updateDrawableArrayList();
+        Display.updateImage(newImage);
+        return newImage;
     }
 
     static void addPassenger(int positionI, int positionJ)
