@@ -1,9 +1,12 @@
 package movement;
 
+import display.Display;
+import display.drawable.DrawableBehavior;
 import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import manager.Process;
+import shuttlemanager.Station;
 
 import java.util.ArrayList;
 
@@ -89,12 +92,18 @@ public class Movement {
     }
 
 
-    public static void updateMovableArrayList ( ) {
 
+
+
+
+
+
+
+    public static void updateMovableArrayList ( ) {
 
         movableArrayList.clear();
 
-        for (Shuttle s : Process.shuttles) { //yanlış process sınıfı
+        for (Shuttle s : Process.shuttles) {
             movableArrayList.add(s.getMovable());
         }
 
@@ -108,11 +117,26 @@ public class Movement {
 
         updateMovableArrayList();
 
-        for (int i = 0; i < movableArrayList.size(); i++) {
-            //tüm movable olanların hızına hız yönünde göre yeni konumlarını atar
+        for (MovableBehavior movable : movableArrayList) {
+
+            movable.setSpeed(20);
+
+            int stationI = Station.stations[7].getLocationI();
+            int stationJ = Station.stations[7].getLocationJ();
+
+            movable.setVelocityDirection(calculateVelocityDirection(movable, stationI, stationJ));
+            Position next = calculateNextPositionWithDestination(movable,stationI,stationJ);
+            movable.setPosition(next);
+
+            Process.shuttles.get(0).getDrawable().setPosition(next);
+
         }
+
+
+
         // hız atamaları ve diğer ler başka yerde
 
     }
+
 
 }

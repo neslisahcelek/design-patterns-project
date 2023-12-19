@@ -77,6 +77,8 @@ public class Display {
 
     public static void updateImage (Color[][] newImage) {
 
+        Display.updateDrawableArrayList();
+
         for (DrawableBehavior drawableBehavior : drawableArrayList) {
             Display.addToImage(drawableBehavior, newImage);
         }
