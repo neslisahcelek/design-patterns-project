@@ -130,6 +130,9 @@ public class Movement {
 
             Process.shuttles.get(0).getDrawable().setPosition(next);
 
+            if(movable.getVelocityDirection().getI()!=0 || movable.getVelocityDirection().getJ()!=0)
+            {Process.hasChange = true;}
+
         }
 
 

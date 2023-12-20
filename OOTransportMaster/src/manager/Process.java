@@ -21,6 +21,7 @@ public class Process {
     public Process() {
     }
 
+    public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
@@ -45,11 +46,13 @@ public class Process {
 
         Timer timer = new Timer(100, e -> {
 
-            Movement.updatePositions();
-            //System.out.println("i "+ shuttles.get(0).getMovable().getPosition().getI());
+            if(hasChange) {
+                hasChange=false;
+                Movement.updatePositions();
+                display.updateDisplay(getCurrentDisplay());
+                Process.checkClickRequests();
+            }
 
-            display.updateDisplay(getCurrentDisplay());
-            Process.checkClickRequests();
 
         });
         timer.setInitialDelay(0);
