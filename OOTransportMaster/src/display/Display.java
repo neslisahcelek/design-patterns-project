@@ -47,13 +47,25 @@ public class Display {
         int i = (int) drawable.getPosition().getI();
         int j = (int) drawable.getPosition().getJ();
         int type = drawable.getType();
+        boolean direction = drawable.direction;
 
-        if(type == 2) {
+        if(type == 2 && direction) {
             additionalImage = Image.getPassenger();
             i=i-21;
             j=j-8;
         }
-        else {additionalImage = Image.getShuttle();
+        else if(type == 2 && !direction) {
+            additionalImage = Image.getMirroredPassenger();
+            i=i-21;
+            j=j-8;
+        }
+        else if(type == 3 && direction) {
+            additionalImage = Image.getShuttle();
+            i=i-17;
+            j=j-50;
+        }
+        else {
+            additionalImage = Image.getMirroredShuttle();
             i=i-17;
             j=j-50;
         }
@@ -77,8 +89,6 @@ public class Display {
 
     public static void updateImage (Color[][] newImage) {
 
-        Display.updateDrawableArrayList();
-
         for (DrawableBehavior drawableBehavior : drawableArrayList) {
             Display.addToImage(drawableBehavior, newImage);
         }
@@ -99,8 +109,18 @@ public class Display {
         drawableArrayList.sort(Comparator.comparingDouble(d -> d.getPosition().getI()));
     }
 
+    public static Color[][] mirror(Color[][] Image) {
 
+        Color[][] mirroredImage = new Color[ Image.length][ Image[0].length];
 
+        for (int i = 0; i <  Image.length; i++) {
+            for (int j = 0; j <  Image[0].length; j++) {
+                mirroredImage[i][j] = Image[i][ Image[0].length - 1 - j];
+            }
+        }
+
+        return mirroredImage;
+    }
 
 
     public void createDisplay(Color [][] colors) {

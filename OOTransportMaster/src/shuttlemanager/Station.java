@@ -31,6 +31,14 @@ public class Station {
         this.name = name;
     }
 
+    public static Station getStation(int station)
+    {
+        if(station >= 1 && station <= 16)
+        {return stations[station-1];}
+
+        else return new Station(0,0,0);
+    }
+
     public int getLocationI() {
         return locationI;
     }

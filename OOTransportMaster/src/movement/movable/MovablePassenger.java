@@ -7,5 +7,7 @@ public class MovablePassenger extends MovableBehavior {
     public MovablePassenger(double positionI, double positionJ) {
         super.position = new Position(positionI,positionJ);
         super.velocityDirection = new VelocityDirection(0,0);
+        super.speed = 20;
+        super.immutable = true;
     }
 }

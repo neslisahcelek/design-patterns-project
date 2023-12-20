@@ -8,6 +8,16 @@ public abstract class MovableBehavior {
         public VelocityDirection velocityDirection;
         public double speed;
 
+        public boolean immutable;
+
+        public boolean isImmutable() {
+                return immutable;
+        }
+
+        public void setImmutable(boolean immutable) {
+                this.immutable = immutable;
+        }
+
         public MovableBehavior() {
                 this.position = new Position(0,0);
                 this.velocityDirection = new VelocityDirection(0,0);

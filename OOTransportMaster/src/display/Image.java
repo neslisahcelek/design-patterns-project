@@ -21,6 +21,10 @@ public class Image
     private static Color[][] map;
     private static Color[][] shuttle;
 
+    private static Color[][] mirroredPassenger;
+
+    private static Color[][] mirroredShuttle;
+
     private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
 
 
@@ -37,11 +41,28 @@ public class Image
         }
         return passenger;
     }
+
     public static Color[][] getShuttle() {
         if (shuttle == null) {
             shuttle = createImage("shuttle.png");
         }
         return shuttle;
+    }
+
+    public static Color[][] getMirroredPassenger() {
+        if (mirroredPassenger == null) {
+            mirroredPassenger = createImage("passenger.png");
+            mirroredPassenger = Display.mirror(mirroredPassenger);
+        }
+        return mirroredPassenger;
+    }
+
+    public static Color[][] getMirroredShuttle() {
+        if (mirroredShuttle == null) {
+            mirroredShuttle = createImage("shuttle.png");
+            mirroredShuttle = Display.mirror(mirroredShuttle);
+        }
+        return mirroredShuttle;
     }
 
     private static Color[][] createImage(String path)
