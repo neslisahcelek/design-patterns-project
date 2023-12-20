@@ -5,6 +5,10 @@ import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
+
+import movement.Movement;
+import movement.movable.MovableBehavior;
+
 import inputmanager.Click;
 import inputmanager.Input;
 import observer.passenger.Passenger;
@@ -28,6 +32,11 @@ public class Process {
     public static void mainly()
     {
 
+
+        //Process.addShuttle(1,1);
+        addPassenger(223,775);
+        addShuttle(Station.stations[0].getLocationI(),Station.stations[0].getLocationJ());
+
         //main.Process.addShuttle(1,1);
         Shuttle shuttle = new Shuttle(600,600);
         shuttles.add(shuttle);
@@ -48,6 +57,9 @@ public class Process {
 
         Timer timer = new Timer(100, e -> {
 
+            Movement.updatePositions();
+            System.out.println("i "+ shuttles.get(0).getMovable().getPosition().getI());
+
             display.updateDisplay(getCurrentDisplay());
             Process.checkClickRequests();
 
@@ -61,7 +73,6 @@ public class Process {
         // Color[][] newImage = Image.getMap();
         newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
 
-        Display.updateDrawableArrayList();
         Display.updateImage(newImage);
         return newImage;
     }
