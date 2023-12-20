@@ -7,5 +7,7 @@ public class MovableShuttle extends MovableBehavior {
     public MovableShuttle(double positionI, double positionJ) {
         super.position = new Position(positionI,positionJ);
         super.velocityDirection = new VelocityDirection(0,0);
+        super.speed = 5;
+        super.immutable = false;
     }
 }
