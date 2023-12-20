@@ -1,6 +1,7 @@
 package observer.shuttle;
 
 import display.drawable.DrawableShuttle;
+import manager.Process;
 import movement.movable.MovableShuttle;
 import observer.Observer;
 import observer.Subject;
@@ -29,6 +30,7 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
 
     @Override
     public void notifyObservers() { //Shuttle starts moving
+        //Process.shuttleApp.setCommand(new ShuttleCallCommand(this));
         passengers.forEach(Observer::update);
     }
 }

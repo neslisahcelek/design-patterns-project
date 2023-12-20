@@ -5,8 +5,10 @@ import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
+
 import movement.Movement;
 import movement.movable.MovableBehavior;
+
 import inputmanager.Click;
 import inputmanager.Input;
 import observer.passenger.Passenger;
@@ -19,41 +21,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Process {
+    public Process() {
+    }
 
     public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
-    private static ShuttleApp shuttleApp = new ShuttleApp();
+    public static final ShuttleApp shuttleApp = new ShuttleApp();
     private static Color[][] newImage = new Color[Image.getMap().length][Image.getMap()[0].length];
 
     public static void mainly()
     {
 
+
         //Process.addShuttle(1,1);
         addPassenger(223,775);
         addShuttle(Station.stations[0].getLocationI(),Station.stations[0].getLocationJ());
+
+        //main.Process.addShuttle(1,1);
+        Shuttle shuttle = new Shuttle(600,600);
+        shuttles.add(shuttle);
+
+        addPassenger(223,775);
         display();
-        /*
-        for (Passenger p : passengers) {
-            callCommand(shuttles.get(0), p);
-        }
-*/
-        /*
-        int i = 3;
-        for (Passenger p : passengers) {
-            p.setLocation(++i);
-        }
-
-        // start journey
-        ShuttleManager sm = new ShuttleManager(shuttles.get(0));
-        Route[][] route = Chart.getChart();
-
-        for (Observer p : shuttles.get(0).getPassengers()) {
-            passengers.add((Passenger) p);
-        }
-        sm.findShortestRoute(passengers, 1, route);
-         */
-
     }
 
     public static void display()
@@ -95,8 +85,17 @@ public class Process {
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);
-            System.out.println("passanger eklendi "+ passengers.size());}
+
+            applyPatterns(passenger, shuttles.get(0));
+            System.out.println("passenger eklendi "+ passengers.size());}
     }
+
+    private static void applyPatterns(Passenger passenger, Shuttle shuttle) {
+        Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
+        shuttleApp.setCommand(shuttleCallCommand);
+        shuttleApp.takeCommandCall(shuttleCallCommand);
+    }
+
     static void removePassenger(int positionI, int positionJ)
     {
         if(passengers.size()>0) {
@@ -125,7 +124,6 @@ public class Process {
             { minDistance = currentDistance; closestPassenger = passengers.get(i); }
         }
 
-        System.out.println("ben en yakın passangerdım ölüyorum" + closestPassenger.getMovable().getPosition().getJ());
         return closestPassenger;
     }
 
