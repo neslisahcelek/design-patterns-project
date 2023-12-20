@@ -2,15 +2,33 @@ package display.drawable;
 
 import movement.Position;
 
-public interface DrawableBehavior {
-    Position getPosition();
+public abstract class DrawableBehavior {
+    public Position position;
+    public boolean direction;
+    public int type;
 
-    void setPosition(Position position);
+    DrawableBehavior() {
+        this.direction = true;
+    }
 
-    int getType();
+    public Position getPosition() {
+        return position;
+    }
 
-    boolean isDirection();
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
-    void setDirection(boolean direction);
+    public int getType() {
+        return type;
+    }
+
+    public boolean isDirection() {
+        return direction;
+    }
+
+    public void setDirection(boolean direction) {
+        this.direction = direction;
+    }
 
 }
