@@ -6,12 +6,18 @@ import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import manager.Process;
+import shuttlemanager.ShuttleManager;
 import shuttlemanager.Station;
 
 import java.util.ArrayList;
 
+import static shuttlemanager.ShuttleManager.directionShuttle;
+
 
 public class Movement {
+
+    public static int destinationI;
+    public static int destinationJ;
 
     static ArrayList<MovableBehavior> movableArrayList = new ArrayList<>();
     public static VelocityDirection calculateVelocityDirection(MovableBehavior movable, double endI, double endJ)
@@ -42,10 +48,6 @@ public class Movement {
 
 
 
-
-
-    //ayrıca array için yazmada yuvarlamayı görselleştiriciye bırakalım
-    // bu double tipinde ciddi bir konum sadece
 
     static Position calculateNextPosition(MovableBehavior movable)
     {
@@ -115,31 +117,29 @@ public class Movement {
 
     public static void updatePositions () {
 
-        updateMovableArrayList();
-
         for (MovableBehavior movable : movableArrayList) {
 
-            movable.setSpeed(20);
 
-            int stationI = Station.stations[7].getLocationI();
-            int stationJ = Station.stations[7].getLocationJ();
+            if(!movable.immutable) {
 
-            movable.setVelocityDirection(calculateVelocityDirection(movable, stationI, stationJ));
-            Position next = calculateNextPositionWithDestination(movable,stationI,stationJ);
-            movable.setPosition(next);
 
-            Process.shuttles.get(0).getDrawable().setPosition(next);
+                Position next = movement.Movement.calculateNextPositionWithDestination(movable, destinationI, destinationJ);
+                movable.setPosition(next);
+                Process.shuttles.get(0).getDrawable().setPosition(next);
+                directionShuttle();
 
-            if(movable.getVelocityDirection().getI()!=0 || movable.getVelocityDirection().getJ()!=0)
-            {Process.hasChange = true;}
+              /*  movable.setVelocityDirection(calculateVelocityDirection(movable, stationI, stationJ));
+                Position next = calculateNextPositionWithDestination(movable, stationI, stationJ);
+                movable.setPosition(next);*/
+               // ShuttleManager.shuttleGo();
 
+                Process.hasChange = true;
+            }
         }
 
-
-
-        // hız atamaları ve diğer ler başka yerde
-
     }
+
+
 
 
 }
