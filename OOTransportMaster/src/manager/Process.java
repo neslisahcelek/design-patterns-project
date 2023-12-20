@@ -17,6 +17,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static shuttlemanager.ShuttleManager.shuttleGo;
+
 public class Process {
     public Process() {
     }
@@ -29,8 +31,10 @@ public class Process {
 
     public static void mainly()
     {
+
         addShuttle(Station.stations[0].getLocationI(),Station.stations[0].getLocationJ());
         addPassenger(223,775);
+
         display();
     }
 
@@ -42,16 +46,19 @@ public class Process {
         display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
-
+        shuttleGo();
 
         Timer timer = new Timer(100, e -> {
 
             if(hasChange) {
                 hasChange=false;
+                Movement.updateMovableArrayList();
                 Movement.updatePositions();
+
+                Display.updateDrawableArrayList();
                 display.updateDisplay(getCurrentDisplay());
-                Process.checkClickRequests();
             }
+            Process.checkClickRequests();
 
 
         });
@@ -198,6 +205,7 @@ public class Process {
         if(0 != Input.getClicks().size())
         {
             applyRequests();
+            hasChange = true;
         }
     }
 
