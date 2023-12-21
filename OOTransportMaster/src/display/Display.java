@@ -15,6 +15,7 @@ public class Display {
     private Frame frame;
     private Panel panel;
     static ArrayList<DrawableBehavior> drawableArrayList = new ArrayList<>();
+    static ArrayList<DrawableBehavior> priorDrawableArrayList = new ArrayList<>();
 
     JLabel createLabel(int x, int y, int width, int height, String text)
     {
@@ -108,6 +109,8 @@ public class Display {
         }
 
         drawableArrayList.sort(Comparator.comparingDouble(d -> d.getPosition().getI()));
+        drawableArrayList.addAll(priorDrawableArrayList);
+//YAZILAR BURAYA GELECEK
     }
 
     public static Color[][] mirror(Color[][] Image) {

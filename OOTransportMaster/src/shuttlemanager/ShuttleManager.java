@@ -1,17 +1,20 @@
 package shuttlemanager;
 
+import manager.Process;
 import movement.Position;
+import movement.VelocityDirection;
 import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static movement.Movement.calculateVelocityDirection;
 
 
 public class ShuttleManager {
-    Shuttle shuttle;
+    static Shuttle shuttle;
 
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
@@ -54,18 +57,47 @@ public class ShuttleManager {
 
     }
 
-    public static void shuttleGo(Shuttle shuttle)
+    public void shuttleGo()
     {
-        Station station = Station.getStation(10);
+        int step = 1;
 
-        shuttle.setTargetPosition(new Position(station.getLocationI(),station.getLocationI()));
-        //shuttle.setTargetPosition(station.getLocationI(),station.getLocationI());
+        ArrayList<Integer> route = new ArrayList<>(List.of(1, 2, 13, 12, 11, 10, 9, 15, 16));
+
+        System.out.println(shuttle.getMovable().position.getI());
+        System.out.println(shuttle.getMovable().position.getJ());
+        System.out.println(Station.getStation(step).getPosition().getI());
+        System.out.println(Station.getStation(step).getPosition().getJ());
+
+        // gider
+        if(shuttle.getMovable().position.getI() == Station.getStation(step).getPosition().getI())
+        {
+            shuttle.getMovable().immutable = true;
+
+            step++;
+
+            updateVelocityDirection(route.get(step));
+
+            //yolcualr biner
+            // yolcular yok olur
+
+
+            shuttle.getMovable().immutable = false; //devam eder
+
+        }
+
+    }
+
+    public static void updateVelocityDirection(int destinationStation)
+    {
+        Station station = Station.getStation(destinationStation);
+
+        shuttle.setTargetPosition(station.position);
 
         MovableBehavior movable = shuttle.getMovable();
         Position destinationPosition = shuttle.getTargetPosition();
+        VelocityDirection velocityDirection = calculateVelocityDirection(movable,destinationPosition);
 
-        movable.setVelocityDirection(calculateVelocityDirection(movable,destinationPosition));
-
+        movable.setVelocityDirection(velocityDirection);
     }
 
 

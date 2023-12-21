@@ -37,7 +37,6 @@ public abstract class IShuttle {
     public void setTargetPosition(Position targetPosition) {
         this.targetPosition = targetPosition;
     }
-
     public void setTargetPosition(double i, double j) {
         this.targetPosition.setI(i);
         this.targetPosition.setJ(j);
