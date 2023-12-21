@@ -20,12 +20,12 @@ public class Image
     private static Color[][] passenger;
     private static Color[][] map;
     private static Color[][] shuttle;
-
     private static Color[][] mirroredPassenger;
-
     private static Color[][] mirroredShuttle;
 
-    private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
+    //private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
+    private static final String filePath = "/Users/neslisahcelek/Desktop/CSE/Design Patterns/project/design-patterns-project/Image/";
+
 
 
 

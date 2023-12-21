@@ -10,6 +10,7 @@ import inputmanager.Input;
 import movement.Movement;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import shuttlemanager.ShuttleManager;
 import shuttlemanager.Station;
 
 import javax.swing.*;
@@ -20,9 +21,6 @@ import java.util.Arrays;
 import static shuttlemanager.ShuttleManager.shuttleGo;
 
 public class Process {
-    public Process() {
-    }
-
     public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
@@ -85,6 +83,13 @@ public class Process {
         if(passengers.size()>0 && isValid(positionI,positionJ)) {
             Passenger passenger = findClosestPassenger(positionI, positionJ);
             passengers.remove(passenger);
+        }
+    }
+
+    static void start() {
+        ShuttleManager shuttleManager = new ShuttleManager(shuttles.get(0));
+        if (passengers.size() == 10) {
+            shuttleManager.startRoute();
         }
     }
 
