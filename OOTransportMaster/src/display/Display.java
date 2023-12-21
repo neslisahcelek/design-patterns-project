@@ -2,6 +2,7 @@ package display;
 
 import display.drawable.DrawableBehavior;
 import manager.Process;
+import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 
@@ -120,6 +121,15 @@ public class Display {
         }
 
         return mirroredImage;
+    }
+
+    public static void updateDirection(DrawableBehavior drawable, MovableBehavior movable)
+    {
+        if (movable.getVelocityDirection().getJ() > 0) {
+            drawable.direction = false;
+        } else {
+            drawable.direction = true;
+        }
     }
 
 

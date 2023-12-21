@@ -9,21 +9,22 @@ import manager.Process;
 import shuttlemanager.ShuttleManager;
 import shuttlemanager.Station;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-import static shuttlemanager.ShuttleManager.directionShuttle;
+import static display.Display.updateDirection;
 
 
 public class Movement {
 
-    public static int destinationI;
-    public static int destinationJ;
-
-    static ArrayList<MovableBehavior> movableArrayList = new ArrayList<>();
-    public static VelocityDirection calculateVelocityDirection(MovableBehavior movable, double endI, double endJ)
+    public static VelocityDirection calculateVelocityDirection(
+            MovableBehavior movable, Position destinationPosition )
     {
         double startI = movable.getPosition().getI();
         double startJ = movable.getPosition().getJ();
+
+        double endI = destinationPosition.getI();
+        double endJ = destinationPosition.getJ();
 
         double sum =
                 Math.sqrt(Math.pow(endI-startI, 2) +
@@ -49,7 +50,7 @@ public class Movement {
 
 
 
-    static Position calculateNextPosition(MovableBehavior movable)
+    static void calculateNextPosition(MovableBehavior movable)
     {
         double newPositionI = movable.getPosition().getI() +
                 (movable.getVelocityDirection().getI() * movable.getSpeed());
@@ -57,12 +58,15 @@ public class Movement {
         double newPositionJ = movable.getPosition().getJ() +
                 (movable.getVelocityDirection().getJ() * movable.getSpeed());
 
-        return new Position(newPositionI,newPositionJ);
+        movable.setPosition(newPositionI,newPositionJ);
     }
 
-    public static Position calculateNextPositionWithDestination(
-            MovableBehavior movable, double destinationI, double destinationJ)
+    public static void calculateNextPositionWithDestination(
+            MovableBehavior movable, Position destinationPosition)
     {
+        double destinationI = destinationPosition.getI();
+        double destinationJ = destinationPosition.getJ();
+
         double firstPositionI = movable.getPosition().getI();
 
         double firstPositionJ = movable.getPosition().getJ();
@@ -89,52 +93,27 @@ public class Movement {
             newPositionJ = destinationJ;
         }
 
-        return new Position(newPositionI,newPositionJ);
-
-    }
-
-
-
-
-
-
-
-
-
-    public static void updateMovableArrayList ( ) {
-
-        movableArrayList.clear();
-
-        for (Shuttle s : Process.shuttles) {
-            movableArrayList.add(s.getMovable());
-        }
-
-        for (Passenger p : Process.passengers) {
-            movableArrayList.add(p.getMovable());
-        }
+        movable.setPosition(newPositionI,newPositionJ);
     }
 
 
     public static void updatePositions () {
 
-        for (MovableBehavior movable : movableArrayList) {
+        for (Shuttle s : Process.shuttles) {
+            updatePositions(s.getMovable(), s.getDrawable(), s.getTargetPosition());
+        }
 
+    }
 
-            if(!movable.immutable) {
+    private static void updatePositions(MovableBehavior movable, DrawableBehavior drawable, Position destinationPosition)
+    {
+        if(!movable.immutable) {
 
+            calculateNextPositionWithDestination(movable,destinationPosition);
+            drawable.setPosition(movable.getPosition());
+            updateDirection(drawable,movable);
 
-                Position next = movement.Movement.calculateNextPositionWithDestination(movable, destinationI, destinationJ);
-                movable.setPosition(next);
-                Process.shuttles.get(0).getDrawable().setPosition(next);
-                directionShuttle();
-
-              /*  movable.setVelocityDirection(calculateVelocityDirection(movable, stationI, stationJ));
-                Position next = calculateNextPositionWithDestination(movable, stationI, stationJ);
-                movable.setPosition(next);*/
-               // ShuttleManager.shuttleGo();
-
-                Process.hasChange = true;
-            }
+            Process.hasChange = true;
         }
 
     }
