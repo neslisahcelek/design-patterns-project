@@ -10,6 +10,7 @@ import inputmanager.Input;
 import movement.Movement;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import shuttlemanager.ShuttleManager;
 import shuttlemanager.Station;
 
 import javax.swing.*;
@@ -17,7 +18,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static shuttlemanager.ShuttleManager.shuttleGo;
 
 public class Process {
     public Process() {
@@ -32,7 +32,7 @@ public class Process {
     public static void mainly()
     {
 
-        addShuttle(Station.stations[0].getLocationI(),Station.stations[0].getLocationJ());
+        addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
         addPassenger(223,775);
 
         display();
@@ -46,7 +46,9 @@ public class Process {
         display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
-        shuttleGo(shuttles.get(0));
+
+        ShuttleManager sm = new ShuttleManager(shuttles.get(0));
+        sm.shuttleGo();
 
         Timer timer = new Timer(100, e -> {
 
@@ -121,8 +123,8 @@ public class Process {
 
         for (int i = 0; i < Station.stations.length ; i++) {
 
-            double currentDistance = findDistance(Station.stations[i].getLocationI(),
-                    Station.stations[i].getLocationJ(),positionI,positionJ);
+            double currentDistance = findDistance(Station.getStation(i).getPosition().getI(),
+                    Station.getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(currentDistance < minDistance )
             { minDistance = currentDistance; closestStation = i; }
@@ -131,7 +133,7 @@ public class Process {
         return closestStation;
     }
 
-    private static double findDistance(int arrayPositionI, int arrayPositionJ, int positionI,int positionJ)
+    private static double findDistance(double arrayPositionI, double arrayPositionJ, double positionI,double positionJ)
     {
             return Math.sqrt(Math.pow(arrayPositionI - positionI, 2) +
                             Math.pow(arrayPositionJ - positionJ, 2));
@@ -158,15 +160,15 @@ public class Process {
 
         for (int i = 0; i < Station.stations.length ; i++) {
 
-            currentDistance = findDistance(Station.stations[i].getLocationI(),
-                    Station.stations[i].getLocationJ(),positionI,positionJ);
+            currentDistance = findDistance(Station.getStation(i).getPosition().getI(),
+                    Station.getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(range >= currentDistance) {return true;}
         }
         return false;
     }
 
-    static void addShuttle(int positionI, int positionJ)
+    static void addShuttle(double positionI, double positionJ)
     {
         Shuttle shuttle = new Shuttle(positionI,positionJ);
         shuttles.add(shuttle);
