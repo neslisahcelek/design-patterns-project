@@ -7,7 +7,6 @@ public abstract class MovableBehavior {
         public Position position;
         public VelocityDirection velocityDirection;
         public double speed;
-
         public boolean immutable;
 
         public boolean isImmutable() {
@@ -31,6 +30,12 @@ public abstract class MovableBehavior {
         public void setPosition(Position position) {
                 this.position = position;
         }
+
+        public void setPosition(double i, double j) {
+               position.setI(i);
+               position.setJ(j);
+        }
+
 
         public VelocityDirection getVelocityDirection() {
                 return velocityDirection;
