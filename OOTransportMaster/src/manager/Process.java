@@ -46,17 +46,18 @@ public class Process {
         display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
-        shuttleGo();
+        shuttleGo(shuttles.get(0));
 
         Timer timer = new Timer(100, e -> {
 
             if(hasChange) {
                 hasChange=false;
-                Movement.updateMovableArrayList();
-                Movement.updatePositions();
 
+                Movement.updatePositions();
                 Display.updateDrawableArrayList();
-                display.updateDisplay(getCurrentDisplay());
+                newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
+                Display.updateImage(newImage);
+                display.updateDisplay(newImage);
             }
             Process.checkClickRequests();
 
@@ -66,14 +67,7 @@ public class Process {
         timer.start();
     }
 
-    static Color[][] getCurrentDisplay()
-    {
-        // Color[][] newImage = Image.getMap();
-        newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
 
-        Display.updateImage(newImage);
-        return newImage;
-    }
 
     static void addPassenger(int positionI, int positionJ)
     {
@@ -83,7 +77,15 @@ public class Process {
             passengers.add(passenger);
 
             applyPatterns(passenger, shuttles.get(0));
-            System.out.println("passenger eklendi "+ passengers.size());}
+        }
+    }
+
+    static void removePassenger(int positionI, int positionJ)
+    {
+        if(passengers.size()>0 && isValid(positionI,positionJ)) {
+            Passenger passenger = findClosestPassenger(positionI, positionJ);
+            passengers.remove(passenger);
+        }
     }
 
     private static void applyPatterns(Passenger passenger, Shuttle shuttle) {
@@ -91,16 +93,6 @@ public class Process {
         shuttleApp.setCommand(shuttleCallCommand);
         shuttleApp.takeCommandCall(shuttleCallCommand);
     }
-
-    static void removePassenger(int positionI, int positionJ)
-    {
-        if(passengers.size()>0) {
-            Passenger passenger = findClosestPassenger(positionI, positionJ);
-            passengers.remove(passenger);
-            System.out.println("passanger kaldırıldı " + passengers.size());
-        }
-    }
-
 
     private static Passenger findClosestPassenger(int positionI,int positionJ) {
 
@@ -122,8 +114,6 @@ public class Process {
 
         return closestPassenger;
     }
-
-
 
     private static int findClosestStation(int positionI,int positionJ) {
         double minDistance = Double.MAX_VALUE;
@@ -147,10 +137,6 @@ public class Process {
                             Math.pow(arrayPositionJ - positionJ, 2));
     }
 
-
-
-
-
     static void callCommand(Shuttle shuttle, Passenger passenger) {
         Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
         setCommand(shuttleCallCommand);
@@ -168,16 +154,17 @@ public class Process {
     static boolean isValid(int positionI,int positionJ)
     {
         int range = 100;
+        double currentDistance;
 
         for (int i = 0; i < Station.stations.length ; i++) {
-            if(range >= Math.sqrt(
-                    Math.pow(Station.stations[i].getLocationI() - positionI, 2) +
-                            Math.pow(Station.stations[i].getLocationJ() - positionJ, 2)))
-            {return true;}
+
+            currentDistance = findDistance(Station.stations[i].getLocationI(),
+                    Station.stations[i].getLocationJ(),positionI,positionJ);
+
+            if(range >= currentDistance) {return true;}
         }
         return false;
     }
-
 
     static void addShuttle(int positionI, int positionJ)
     {
