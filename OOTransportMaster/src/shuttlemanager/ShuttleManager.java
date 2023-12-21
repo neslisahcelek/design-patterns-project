@@ -1,7 +1,5 @@
 package shuttlemanager;
 
-import manager.Process;
-import movement.Movement;
 import movement.Position;
 import movement.movable.MovableBehavior;
 import observer.passenger.Passenger;
@@ -9,8 +7,8 @@ import observer.shuttle.Shuttle;
 
 import java.util.ArrayList;
 
-import static movement.Movement.destinationI;
-import static movement.Movement.destinationJ;
+import static movement.Movement.calculateVelocityDirection;
+
 
 public class ShuttleManager {
     Shuttle shuttle;
@@ -56,25 +54,19 @@ public class ShuttleManager {
 
     }
 
-    public static void shuttleGo()
+    public static void shuttleGo(Shuttle shuttle)
     {
-        destinationI = Station.stations[11].getLocationI();
-        destinationJ = Station.stations[11].getLocationJ();
+        Station station = Station.getStation(10);
 
-        MovableBehavior movable = manager.Process.shuttles.get(0).getMovable();
+        shuttle.setTargetPosition(new Position(station.getLocationI(),station.getLocationI()));
+        //shuttle.setTargetPosition(station.getLocationI(),station.getLocationI());
 
-        movable.setVelocityDirection(movement.Movement.calculateVelocityDirection(movable, destinationI, destinationJ));
+        MovableBehavior movable = shuttle.getMovable();
+        Position destinationPosition = shuttle.getTargetPosition();
 
-
+        movable.setVelocityDirection(calculateVelocityDirection(movable,destinationPosition));
 
     }
 
-    public static void directionShuttle()
-    {
-        if (Process.shuttles.get(0).getMovable().getVelocityDirection().getJ() > 0) {
-            Process.shuttles.get(0).getDrawable().direction = false;
-        } else {
-            Process.shuttles.get(0).getDrawable().direction = true;
-        }
-    }
+
 }
