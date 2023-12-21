@@ -24,7 +24,7 @@ public class Image
     private static Color[][] mirroredShuttle;
 
     //private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
-    private static final String filePath = "/Users/neslisahcelek/Desktop/CSE/Design Patterns/project/design-patterns-project/Image/";
+    private static final String filePath = Common.filePath;
 
 
 
