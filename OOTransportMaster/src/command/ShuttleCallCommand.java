@@ -16,9 +16,4 @@ public class ShuttleCallCommand implements Command {
     public void execute() {
         shuttle.registerObserver(passenger);
     }
-
-    @Override
-    public void undo() {
-        shuttle.removeObserver(passenger);
-    }
 }
