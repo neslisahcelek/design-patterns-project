@@ -5,7 +5,6 @@ public class Position {
         this.i = i;
         this.j = j;
     }
-
     private double i;
     private double j;
 
