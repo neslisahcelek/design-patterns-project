@@ -1,6 +1,7 @@
 package manager;
 
 import command.Command;
+import command.PassengerCancelCommand;
 import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
@@ -20,9 +21,6 @@ import java.util.Arrays;
 
 
 public class Process {
-    public Process() {
-    }
-
     public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
@@ -78,22 +76,37 @@ public class Process {
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);
 
-            applyPatterns(passenger, shuttles.get(0));
+            applyShuttleCallCommand(passenger, shuttles.get(0));
         }
     }
 
     static void removePassenger(int positionI, int positionJ)
     {
-        if(passengers.size()>0 && isValid(positionI,positionJ)) {
+        if(!passengers.isEmpty() && isValid(positionI,positionJ)) {
             Passenger passenger = findClosestPassenger(positionI, positionJ);
             passengers.remove(passenger);
+
+            applyPassengerCancelCommand(passenger, shuttles.get(0));
         }
     }
 
-    private static void applyPatterns(Passenger passenger, Shuttle shuttle) {
+    private static void applyShuttleCallCommand(Passenger passenger, Shuttle shuttle) {
         Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
         shuttleApp.setCommand(shuttleCallCommand);
         shuttleApp.takeCommandCall(shuttleCallCommand);
+    }
+
+    private static void applyPassengerCancelCommand(Passenger passenger, Shuttle shuttle) {
+        Command passengerCancelCommand = new PassengerCancelCommand(shuttle, passenger);
+        shuttleApp.setCommand(passengerCancelCommand);
+        shuttleApp.takeCommandCall(passengerCancelCommand);
+    }
+
+    static void start() {
+        ShuttleManager shuttleManager = new ShuttleManager(shuttles.get(0));
+        if (passengers.size() == 10) {
+            shuttleManager.startRoute();
+        }
     }
 
     private static Passenger findClosestPassenger(int positionI,int positionJ) {
