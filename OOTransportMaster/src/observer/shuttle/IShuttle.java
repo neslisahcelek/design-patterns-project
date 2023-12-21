@@ -7,6 +7,7 @@ import movement.movable.MovableBehavior;
 public abstract class IShuttle {
     DrawableBehavior drawable;
     MovableBehavior movable;
+    Position targetPosition;
     int station;
 
     public IShuttle() {}
@@ -28,4 +29,20 @@ public abstract class IShuttle {
     public void setStation(int station) {
         this.station = station;
     }
+
+    public Position getTargetPosition() {
+        return targetPosition;
+    }
+
+    public void setTargetPosition(Position targetPosition) {
+        this.targetPosition = targetPosition;
+    }
+
+    public void setTargetPosition(double i, double j) {
+        this.targetPosition.setI(i);
+        this.targetPosition.setJ(j);
+    }
+
+
+
 }
