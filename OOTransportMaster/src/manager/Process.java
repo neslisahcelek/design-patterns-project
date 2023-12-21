@@ -105,7 +105,7 @@ public class Process {
     static void start() {
         ShuttleManager shuttleManager = new ShuttleManager(shuttles.get(0));
         if (passengers.size() == 10) {
-            shuttleManager.startRoute();
+           // shuttleManager.startRoute();
         }
     }
 
