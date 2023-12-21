@@ -1,8 +1,10 @@
 package shuttlemanager;
 
+import movement.Position;
+
 public class Station {
-    int locationI;
-    int locationJ;
+
+    Position position;
     int name;
 
     public static Station[] stations = {
@@ -25,9 +27,8 @@ public class Station {
 
     };
 
-    public Station(int locationI, int locationJ,  int name) {
-        this.locationI = locationI;
-        this.locationJ = locationJ;
+    public Station(double i, double j,  int name) {
+        this.position = new Position(i,j);
         this.name = name;
     }
 
@@ -39,27 +40,19 @@ public class Station {
         else return new Station(0,0,0);
     }
 
-    public int getLocationI() {
-        return locationI;
-    }
-
-    public void setLocationI(int locationI) {
-        this.locationI = locationI;
-    }
-
-    public int getLocationJ() {
-        return locationJ;
-    }
-
-    public void setLocationJ(int locationJ) {
-        this.locationJ = locationJ;
-    }
-
     public int getName() {
         return name;
     }
 
     public void setName(int name) {
         this.name = name;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }
