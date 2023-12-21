@@ -2,6 +2,7 @@ package observer.shuttle;
 
 import display.drawable.DrawableShuttle;
 import manager.Process;
+import movement.Position;
 import movement.movable.MovableShuttle;
 import observer.Observer;
 import observer.Subject;
@@ -16,6 +17,7 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
         super.station = 0;
         super.movable = new MovableShuttle(positionI, positionJ);
         super.drawable = new DrawableShuttle(positionI, positionJ);
+        super.targetPosition = new Position(5,5);
     }
 
     @Override
