@@ -17,8 +17,4 @@ public class NotifyPassengerCommand implements Command{
         shuttle.notifyObservers();
     }
 
-    @Override
-    public void undo() {
-
-    }
 }

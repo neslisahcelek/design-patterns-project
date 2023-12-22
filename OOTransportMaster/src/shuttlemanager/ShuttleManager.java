@@ -15,6 +15,12 @@ import static movement.Movement.calculateVelocityDirection;
 
 public class ShuttleManager {
     static Shuttle shuttle;
+    ArrayList<Integer> route = new ArrayList<>(List.of(1, 2, 13, 12, 11, 10, 9, 15, 16));
+    int step = 1;
+    public static int done = 0;
+
+    int timeStart;
+    int timeEnd;
 
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
@@ -57,35 +63,67 @@ public class ShuttleManager {
 
     }
 
-    public void shuttleGo()
+
+    public void checkShuttleManager()
     {
-        int step = 1;
+        boolean arrivedStation = shuttle.getMovable().position.getI() ==
+                Station.getStation(route.get(step-1)).getPosition().getI()
+                && shuttle.getMovable().position.getJ() ==
+                        Station.getStation(route.get(step-1)).getPosition().getJ()
+                && done == 0;
 
-        ArrayList<Integer> route = new ArrayList<>(List.of(1, 2, 13, 12, 11, 10, 9, 15, 16));
-
-        System.out.println(shuttle.getMovable().position.getI());
-        System.out.println(shuttle.getMovable().position.getJ());
-        System.out.println(Station.getStation(step).getPosition().getI());
-        System.out.println(Station.getStation(step).getPosition().getJ());
-
-        // gider
-        if(shuttle.getMovable().position.getI() == Station.getStation(step).getPosition().getI())
+        if(arrivedStation)
         {
             shuttle.getMovable().immutable = true;
-
-            step++;
-
-            updateVelocityDirection(route.get(step));
-
-            //yolcualr biner
-            // yolcular yok olur
-
-
-            shuttle.getMovable().immutable = false; //devam eder
-
+            shuttle.setStation(route.get(step-1));
+            System.out.println(route.get(step-1));
+            //yolcular biner
+            done = 2;
+            Process.hasChange = true;
+        }
+        else if (done == 2)
+        {
+            startWaiting();
+            Process.hasChange = true;
+        }
+        else if (done == 3)
+        {
+            waiting();
+            Process.hasChange = true;
+        }
+        else if (done == 4)
+        {
+            hitTheRoad();
+            Process.hasChange = true;
         }
 
     }
+
+    public void startWaiting()
+    {
+        timeStart = Process.scene;
+        done = 3;
+
+    }
+
+    public void waiting() {
+        //System.out.println(timeStart + " " + timeEnd);
+        timeEnd = Process.scene;
+
+        if (timeEnd - timeStart > 10) {
+            done = 4;
+        }
+    }
+
+    public void hitTheRoad() {
+        step++;
+        updateVelocityDirection(route.get(step-1));
+        shuttle.getMovable().immutable = false;
+        done = 0;
+    }
+
+
+
 
     public static void updateVelocityDirection(int destinationStation)
     {
