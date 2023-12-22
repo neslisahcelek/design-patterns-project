@@ -21,6 +21,8 @@ import java.util.Arrays;
 
 
 public class Process {
+
+    public static int scene;
     public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
@@ -44,15 +46,14 @@ public class Process {
         display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
-
+        shuttles.get(0).getMovable().setImmutable(false);
         ShuttleManager sm = new ShuttleManager(shuttles.get(0));
-        sm.shuttleGo();
 
         Timer timer = new Timer(100, e -> {
 
             if(hasChange) {
                 hasChange=false;
-
+                sm.checkShuttleManager();
                 Movement.updatePositions();
                 Display.updateDrawableArrayList();
                 newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
@@ -60,7 +61,8 @@ public class Process {
                 display.updateDisplay(newImage);
             }
             Process.checkClickRequests();
-
+            scene++;
+            System.out.println("hangi aşamada " + ShuttleManager.done + " frame " + scene + " duruyor mu " + shuttles.get(0).getMovable().immutable);
 
         });
         timer.setInitialDelay(0);
