@@ -15,7 +15,7 @@ import static movement.Movement.calculateVelocityDirection;
 
 public class ShuttleManager {
     static Shuttle shuttle;
-    ArrayList<Integer> route = new ArrayList<>(List.of(1, 2, 13, 12, 11, 10, 9, 15, 16));
+    static List<Integer> route;
     int step = 1;
     public static int done = 0;
     int timeStart;
@@ -24,9 +24,10 @@ public class ShuttleManager {
 
     public ShuttleManager(Shuttle shuttle) {
 
-        //this.shuttle = shuttle;
+        this.shuttle = shuttle;
         distances = Chart.getChart();
     }
+    /*
     public static void main(String[] args) {
 
         Shuttle shuttle = new Shuttle(Station.getStation(1).getPosition().getI(), Station.getStation(1).getPosition().getJ());
@@ -37,12 +38,14 @@ public class ShuttleManager {
                 new Passenger(4,Station.getStation(8).getPosition().getI(), Station.getStation(4).getPosition().getJ()),
                 new Passenger(3,Station.getStation(3).getPosition().getI(), Station.getStation(3).getPosition().getJ())
         );
-        List<Integer> shortestRoute = findShortestRoute(shuttle, passengers);
+        route = findShortestRoute(shuttle, passengers);
 
-        System.out.println("En kısa rota: " + shortestRoute);
+        System.out.println("En kısa rota: " + route);
 
     }
 
+
+     */
     public static List<Integer> findShortestRoute(Shuttle shuttle, List<Passenger> passengers) {
         int currentStation = shuttle.getStation();
         List<Integer> passengerStations = new ArrayList<>();
@@ -54,16 +57,19 @@ public class ShuttleManager {
         List<Integer> shortestRoute = null;
         int minDistance = Integer.MAX_VALUE;
 
-        // Tüm olası rotaları deneyip en kısa rotayı seçelim
         List<List<Integer>> allRoutes = generateAllRoutes(currentStation, passengerStations);
         for (List<Integer> route : allRoutes) {
-            int totalDistance = calculateTotalDistance(route);
-            if (totalDistance < minDistance) {
-                minDistance = totalDistance;
-                shortestRoute = route;
+            System.out.println("Rota: " + route);
+            if (route.get(0) == 0 && route.get(route.size() - 1) == 16) {
+                System.out.println("Rota: " + route);
+                int totalDistance = calculateTotalDistance(route);
+                if (totalDistance < minDistance) {
+                    minDistance = totalDistance;
+                    shortestRoute = route;
+                }
             }
         }
-
+        route = shortestRoute;
         return shortestRoute;
     }
 
@@ -96,15 +102,13 @@ public class ShuttleManager {
 
     private static int calculateTotalDistance(List<Integer> route) {
         int totalDistance = 0;
-        for (int i = 0; i < route.size() - 1; i++) {
+        for (int i = 0; i < route.size() - 2; i++) {
             int fromStation = route.get(i);
             int toStation = route.get(i + 1);
-            totalDistance += distances[toStation][fromStation].getDistance();
+            totalDistance += distances[fromStation][toStation].getDistance();
         }
         return totalDistance;
     }
-
-
 
 
     public void route() {
