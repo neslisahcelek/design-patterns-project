@@ -1,6 +1,7 @@
 package observer.passenger;
 
 import display.drawable.DrawableBehavior;
+import manager.Process;
 import movement.Position;
 import movement.movable.MovableBehavior;
 
@@ -8,6 +9,7 @@ public abstract class IPassenger {
     DrawableBehavior drawable;
     MovableBehavior movable;
     int station;
+    int id;
 
     public IPassenger() {}
 
@@ -27,4 +29,6 @@ public abstract class IPassenger {
     public void setStation(int station) {
         this.station = station;
     }
+
+    public int getId() { return id; }
 }
