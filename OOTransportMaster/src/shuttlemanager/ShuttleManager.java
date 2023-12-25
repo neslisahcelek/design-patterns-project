@@ -66,8 +66,7 @@ public class ShuttleManager {
 
         List<List<Integer>> allRoutes = generateAllRoutes(currentStation, passengerStations);
         for (List<Integer> route : allRoutes) {
-            if (route.get(0) == 0 && route.get(route.size() - 1) == 16) {
-                System.out.println("Rota: " + route);
+            if (route.get(0) == 1 && route.get(route.size() - 1) == 16) {
                 int totalDistance = calculateTotalDistance(route);
                 if (totalDistance < minDistance) {
                     minDistance = totalDistance;
@@ -76,12 +75,23 @@ public class ShuttleManager {
             }
         }
 
-        System.out.println("En kısa rota: " + shortestRoute);
-        route = shortestRoute.stream()
-                .map(s -> s + 1)
-                .collect(Collectors.toList());;
-        System.out.println("En kısa rota +1: " + shortestRoute);
+        System.out.println("Shortest Rota: " + shortestRoute);
+        List<Integer> newPath = null;
+        for (int i = 0; i < shortestRoute.size() - 1; i++) {
+            int fromStation = shortestRoute.get(i) -1;
+            int toStation = shortestRoute.get(i + 1) -1;
 
+            if (newPath == null) {
+                newPath = distances[fromStation][toStation].path;
+            } else{
+                newPath.remove(newPath.size()-1);
+                newPath.addAll(distances[fromStation][toStation].path);
+            }
+            System.out.println("New path: " + newPath);
+        }
+
+        System.out.println("En kısa rota: " + newPath);
+        route = newPath;
     }
 
     private static List<List<Integer>> generateAllRoutes(int currentStation, List<Integer> passengerStations) {

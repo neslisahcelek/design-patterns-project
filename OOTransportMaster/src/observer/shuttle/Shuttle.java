@@ -14,7 +14,7 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
 
     public Shuttle(double positionI, double positionJ) {
         passengers = new ArrayList<>();
-        super.station = 0;
+        super.station = 1;
         super.movable = new MovableShuttle(positionI, positionJ);
         super.drawable = new DrawableShuttle(positionI, positionJ);
         super.targetPosition = new Position(5,5);
@@ -32,7 +32,6 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
 
     @Override
     public void notifyObservers() { //Shuttle starts moving
-        //Process.shuttleApp.setCommand(new ShuttleCallCommand(this));
         passengers.forEach(Observer::update);
     }
 }
