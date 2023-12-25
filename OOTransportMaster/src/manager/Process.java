@@ -28,14 +28,13 @@ public class Process {
     public static ArrayList<Shuttle> shuttles = new ArrayList<>();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
     private static Color[][] newImage = new Color[Image.getMap().length][Image.getMap()[0].length];
-
     static ShuttleManager sm;
 
     public static void display()
     {
         //Image.getImages();
         addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
-        sm = new ShuttleManager(shuttles.get(0));
+
         Display display = new Display();
 
         display.createDisplay(Image.getMap());
@@ -43,14 +42,18 @@ public class Process {
         Input.mouseEvent(display.getFrame());
         shuttles.get(0).getMovable().setImmutable(false);
         //ShuttleManager sm = new ShuttleManager(shuttles.get(0));
+        sm = new ShuttleManager(shuttles.get(0));
 
         Timer timer = new Timer(100, e -> {
 
             if(hasChange) {
                 hasChange=false;
-                try {
+
+                /*try {
                     sm.checkShuttleManager2();
-                } catch (NullPointerException nullPointerException) {}
+                } catch (NullPointerException nullPointerException) {}*/
+                sm.checkShuttleManager(passengers);
+
                 Movement.updatePositions();
                 Display.updateDrawableArrayList();
                 newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
@@ -59,7 +62,7 @@ public class Process {
             }
             Process.checkClickRequests();
             scene++;
-            System.out.println("hangi aşamada " + ShuttleManager.done + " frame " + scene + " duruyor mu " + shuttles.get(0).getMovable().immutable);
+            System.out.println("hangi aşamada " + ShuttleManager.shuttleState + " frame " + scene + " duruyor mu " + shuttles.get(0).getMovable().immutable);
 
 
         });
@@ -72,16 +75,17 @@ public class Process {
 
     static void addPassenger(int positionI, int positionJ)
     {
-        if(isValid(positionI,positionJ)) {
+        int maxPassenger = 3;
+
+        if(isValid(positionI,positionJ) && passengers.size() < maxPassenger) {
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);
 
             applyShuttleCallCommand(passenger, shuttles.get(0));
         }
-
-        if (passengers.size() == 3) {
-            sm.startRoute(passengers);
+        else if (passengers.size() == maxPassenger) {
+            sm.isRouteStarted = true;
         }
     }
 
