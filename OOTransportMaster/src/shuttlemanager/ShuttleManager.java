@@ -22,6 +22,7 @@ public class ShuttleManager {
     int timeStart;
     int timeEnd;
     static Route[][] distances = Chart.getChart();
+    boolean isRouteStart = false;
 
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
@@ -65,7 +66,6 @@ public class ShuttleManager {
 
         List<List<Integer>> allRoutes = generateAllRoutes(currentStation, passengerStations);
         for (List<Integer> route : allRoutes) {
-            System.out.println("Rota: " + route);
             if (route.get(0) == 0 && route.get(route.size() - 1) == 16) {
                 System.out.println("Rota: " + route);
                 int totalDistance = calculateTotalDistance(route);
@@ -75,9 +75,13 @@ public class ShuttleManager {
                 }
             }
         }
+
+        System.out.println("En kısa rota: " + shortestRoute);
         route = shortestRoute.stream()
                 .map(s -> s + 1)
                 .collect(Collectors.toList());;
+        System.out.println("En kısa rota +1: " + shortestRoute);
+
     }
 
     private static List<List<Integer>> generateAllRoutes(int currentStation, List<Integer> passengerStations) {
@@ -116,8 +120,22 @@ public class ShuttleManager {
         }
         return totalDistance;
     }
+    public void checkShuttleManager(ArrayList<Passenger> passengers){
+        if (!isRouteStart) {
+            if (passengers.size() == 3) {
+                isRouteStart = true;
+                startRoute(passengers);
 
-    public void checkShuttleManager()
+            }
+        }
+        else {
+            checkShuttleManager2();
+        }
+
+
+    }
+
+    public void checkShuttleManager2()
     {
         boolean arrivedStation = shuttle.getMovable().position.getI() ==
                 Station.getStation(route.get(step-1)).getPosition().getI()

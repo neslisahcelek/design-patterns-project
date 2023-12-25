@@ -29,31 +29,28 @@ public class Process {
     public static final ShuttleApp shuttleApp = new ShuttleApp();
     private static Color[][] newImage = new Color[Image.getMap().length][Image.getMap()[0].length];
 
-    public static void mainly()
-    {
-
-        addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
-        addPassenger(223,775);
-
-        display();
-    }
+    static ShuttleManager sm;
 
     public static void display()
     {
         //Image.getImages();
+        addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
+        sm = new ShuttleManager(shuttles.get(0));
         Display display = new Display();
 
         display.createDisplay(Image.getMap());
 
         Input.mouseEvent(display.getFrame());
         shuttles.get(0).getMovable().setImmutable(false);
-        ShuttleManager sm = new ShuttleManager(shuttles.get(0));
+        //ShuttleManager sm = new ShuttleManager(shuttles.get(0));
 
         Timer timer = new Timer(100, e -> {
 
             if(hasChange) {
                 hasChange=false;
-                sm.checkShuttleManager();
+                try {
+                    sm.checkShuttleManager2();
+                } catch (NullPointerException nullPointerException) {}
                 Movement.updatePositions();
                 Display.updateDrawableArrayList();
                 newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
@@ -64,7 +61,9 @@ public class Process {
             scene++;
             System.out.println("hangi aşamada " + ShuttleManager.done + " frame " + scene + " duruyor mu " + shuttles.get(0).getMovable().immutable);
 
+
         });
+
         timer.setInitialDelay(0);
         timer.start();
     }
@@ -79,6 +78,10 @@ public class Process {
             passengers.add(passenger);
 
             applyShuttleCallCommand(passenger, shuttles.get(0));
+        }
+
+        if (passengers.size() == 3) {
+            sm.startRoute(passengers);
         }
     }
 
