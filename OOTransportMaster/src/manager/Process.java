@@ -36,8 +36,12 @@ public class Process {
         addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
 
         Display display = new Display();
-
         display.createDisplay(Image.getMap());
+
+        //Display.updateDrawableArrayList();
+        //newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
+       // Display.updateImage(newImage);
+        //display.updateDisplay(newImage);
 
         Input.mouseEvent(display.getFrame());
         shuttles.get(0).getMovable().setImmutable(false);
@@ -49,12 +53,9 @@ public class Process {
             if(hasChange) {
                 hasChange=false;
 
-                /*try {
-                    sm.checkShuttleManager2();
-                } catch (NullPointerException nullPointerException) {}*/
                 sm.checkShuttleManager(passengers);
-
                 Movement.updatePositions();
+
                 Display.updateDrawableArrayList();
                 newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
                 Display.updateImage(newImage);
@@ -75,7 +76,7 @@ public class Process {
 
     static void addPassenger(int positionI, int positionJ)
     {
-        int maxPassenger = 3;
+        int maxPassenger = 10;
 
         if(isValid(positionI,positionJ) && passengers.size() < maxPassenger) {
             int station = findClosestStation(positionI,positionJ);

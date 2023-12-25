@@ -180,7 +180,6 @@ public class ShuttleManager {
     public void waiting() {
         //System.out.println(timeStart + " " + timeEnd);
         timeEnd = Process.scene;
-
         if (timeEnd - timeStart > 10) {
             shuttleState = 4;
         }
@@ -195,12 +194,14 @@ public class ShuttleManager {
 
     public static void getOnPassengers()
     {
-        for (int i = 0; i < Process.passengers.size() ; i++) {
-
+        int i = 0;
+        while (i < Process.passengers.size())
+        {
             if (route.get(step) == Process.passengers.get(i).getStation())
             {
                 Process.removePassenger(Process.passengers.get(i));
             }
+            else {i++;}
         }
     }
 
