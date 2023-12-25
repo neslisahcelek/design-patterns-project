@@ -9,7 +9,6 @@ import observer.shuttle.Shuttle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static movement.Movement.calculateVelocityDirection;
 
@@ -26,7 +25,6 @@ public class ShuttleManager {
 
     public ShuttleManager(Shuttle shuttle) {
         this.shuttle = shuttle;
-        distances = Chart.getChart();
     }
 
     public static void startRoute(ArrayList<Passenger> passengers)
@@ -34,25 +32,7 @@ public class ShuttleManager {
         findShortestRoute(shuttle, passengers);
         shuttle.notifyObservers();
     }
-    /*
-    public static void main(String[] args) {
 
-        Shuttle shuttle = new Shuttle(Station.getStation(1).getPosition().getI(), Station.getStation(1).getPosition().getJ());
-        List<Passenger> passengers = List.of(
-                new Passenger(5,Station.getStation(5).getPosition().getI(), Station.getStation(5).getPosition().getJ()),
-                new Passenger(13,Station.getStation(13).getPosition().getI(), Station.getStation(13).getPosition().getJ()),
-                new Passenger(12,Station.getStation(8).getPosition().getI(), Station.getStation(12).getPosition().getJ()),
-                new Passenger(4,Station.getStation(8).getPosition().getI(), Station.getStation(4).getPosition().getJ()),
-                new Passenger(3,Station.getStation(3).getPosition().getI(), Station.getStation(3).getPosition().getJ())
-        );
-        route = findShortestRoute(shuttle, passengers);
-
-        System.out.println("En kısa rota: " + route);
-
-    }
-
-
-     */
     public static void findShortestRoute(Shuttle shuttle, List<Passenger> passengers) {
         int currentStation = shuttle.getStation();
         List<Integer> passengerStations = new ArrayList<>();
@@ -75,23 +55,31 @@ public class ShuttleManager {
             }
         }
 
-        System.out.println("Shortest Rota: " + shortestRoute);
-        List<Integer> newPath = null;
-        for (int i = 0; i < shortestRoute.size() - 1; i++) {
-            int fromStation = shortestRoute.get(i) -1;
-            int toStation = shortestRoute.get(i + 1) -1;
+        addRemainingStations(shortestRoute);
+    }
 
-            if (newPath == null) {
-                newPath = distances[fromStation][toStation].path;
-            } else{
-                newPath.remove(newPath.size()-1);
-                newPath.addAll(distances[fromStation][toStation].path);
+    public static void addRemainingStations(List<Integer> shortestRoute) {
+        System.out.println("Shortest Route: " + shortestRoute);
+        List<Integer> newRoute = null;
+
+        for (int i = 0; i < shortestRoute.size() - 1; i++) {
+            int fromStation = shortestRoute.get(i) - 1;
+            int toStation = shortestRoute.get(i + 1) - 1;
+
+            if (newRoute == null) {
+                newRoute = distances[fromStation][toStation].path;
+            } else {
+                newRoute.remove(newRoute.size()-1);
+                newRoute.addAll(distances[fromStation][toStation].path);
             }
-            System.out.println("New path: " + newPath);
         }
 
-        System.out.println("En kısa rota: " + newPath);
-        route = newPath;
+        for (int i = 0; i < newRoute.size(); i++) {
+            newRoute.set(i, newRoute.get(i) + 1) ;
+        }
+
+        System.out.println("Shortest Route With Remaining Stations: " + newRoute);
+        route = newRoute;
     }
 
     private static List<List<Integer>> generateAllRoutes(int currentStation, List<Integer> passengerStations) {
