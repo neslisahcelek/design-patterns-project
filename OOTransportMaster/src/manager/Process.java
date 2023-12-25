@@ -99,6 +99,13 @@ public class Process {
         }
     }
 
+    public static void removePassenger(Passenger passenger)
+    {
+        if(!passengers.isEmpty())
+        {passengers.remove(passenger);}
+
+    }
+
     private static void applyShuttleCallCommand(Passenger passenger, Shuttle shuttle) {
         Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
         shuttleApp.setCommand(shuttleCallCommand);
