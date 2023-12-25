@@ -16,7 +16,7 @@ import static movement.Movement.calculateVelocityDirection;
 public class ShuttleManager {
     static Shuttle shuttle;
     static List<Integer> route;
-    int step = 0;
+    static int step = 0;
     public static int shuttleState = 0;
     int timeStart;
     int timeEnd;
@@ -143,9 +143,13 @@ public class ShuttleManager {
         {
             shuttle.getMovable().immutable = true;
             shuttle.setStation(route.get(step));
-            System.out.println(route.get(step));
-            //yolcular biner
-            shuttleState = 2;
+            //System.out.println(route.get(step));
+            if(anyPassenger()) {
+                getOnPassengers();
+                shuttleState = 2;
+            }
+            else {shuttleState = 4;}
+
             Process.hasChange = true;
         }
         else if (shuttleState == 2)
@@ -176,7 +180,6 @@ public class ShuttleManager {
     public void waiting() {
         //System.out.println(timeStart + " " + timeEnd);
         timeEnd = Process.scene;
-
         if (timeEnd - timeStart > 10) {
             shuttleState = 4;
         }
@@ -189,6 +192,30 @@ public class ShuttleManager {
         shuttleState = 0;
     }
 
+    public static void getOnPassengers()
+    {
+        int i = 0;
+        while (i < Process.passengers.size())
+        {
+            if (route.get(step) == Process.passengers.get(i).getStation())
+            {
+                Process.removePassenger(Process.passengers.get(i));
+            }
+            else {i++;}
+        }
+    }
+
+    static boolean anyPassenger()
+    {
+        for (int i = 0; i < Process.passengers.size() ; i++) {
+
+            if (route.get(step) == Process.passengers.get(i).getStation())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     public static void updateVelocityDirection(int destinationStation)
