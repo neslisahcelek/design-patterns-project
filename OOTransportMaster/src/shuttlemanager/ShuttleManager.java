@@ -31,6 +31,9 @@ public class ShuttleManager {
     public static void startRoute(ArrayList<Passenger> passengers)
     {
         findShortestRoute(shuttle, passengers);
+        System.out.println("-------------------------");
+        System.out.println("Shuttle is coming!");
+        System.out.println("-------------------------");
         shuttle.notifyObservers();
         isPathCalculated = true;
         System.out.println("hesaplandı");
@@ -38,11 +41,7 @@ public class ShuttleManager {
 
     public static void findShortestRoute(Shuttle shuttle, List<Passenger> passengers) {
         int currentStation = shuttle.getStation();
-        List<Integer> passengerStations = new ArrayList<>();
-        passengers.forEach(p -> passengerStations.add(p.getStation()));
-
-        int lastStation = 16;
-        passengerStations.add(lastStation);
+        List<Integer> passengerStations = addStationstoList(passengers);
 
         List<Integer> shortestRoute = null;
         int minDistance = Integer.MAX_VALUE;
@@ -59,6 +58,22 @@ public class ShuttleManager {
         }
 
         addRemainingStations(shortestRoute);
+    }
+
+    private static List<Integer> addStationstoList(List<Passenger> passengers) {
+        List<Integer> passengerStations = new ArrayList<>();
+
+        for (Passenger p : passengers) {
+            int station = p.getStation();
+            if (!passengerStations.contains(station)) {
+                passengerStations.add(station);
+            }
+        }
+
+        int lastStation = 16;
+        passengerStations.add(lastStation);
+
+        return passengerStations;
     }
 
     public static void addRemainingStations(List<Integer> shortestRoute) {
@@ -81,8 +96,8 @@ public class ShuttleManager {
             newRoute.set(i, newRoute.get(i) + 1) ;
         }
 
-        System.out.println("Shortest Route With Remaining Stations: " + newRoute);
         route = newRoute;
+        System.out.println("Shortest Route With Remaining Stations: " + route);
     }
 
     private static List<List<Integer>> generateAllRoutes(int currentStation, List<Integer> passengerStations) {

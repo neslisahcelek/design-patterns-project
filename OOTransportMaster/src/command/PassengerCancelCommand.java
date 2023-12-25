@@ -13,5 +13,8 @@ public class PassengerCancelCommand implements Command {
     }
 
     @Override
-    public void execute() { shuttle.removeObserver(passenger); }
+    public void execute() {
+        System.out.println("Passenger " + passenger.getId() + " is cancelled (PassengerCancelCommand)");
+        shuttle.removeObserver(passenger);
+    }
 }

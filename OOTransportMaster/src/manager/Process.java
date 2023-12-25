@@ -63,9 +63,6 @@ public class Process {
             }
             Process.checkClickRequests();
             scene++;
-            System.out.println("hangi aşamada " + ShuttleManager.shuttleState + " frame " + scene + " duruyor mu " + shuttles.get(0).getMovable().immutable);
-
-
         });
 
         timer.setInitialDelay(0);
@@ -76,7 +73,8 @@ public class Process {
 
     static void addPassenger(int positionI, int positionJ)
     {
-        int maxPassenger = 10;
+        int maxPassenger = 7;
+
 
         if(isValid(positionI,positionJ) && passengers.size() < maxPassenger) {
             int station = findClosestStation(positionI,positionJ);

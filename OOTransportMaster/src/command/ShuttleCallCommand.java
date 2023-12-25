@@ -14,6 +14,7 @@ public class ShuttleCallCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("Passenger " + passenger.getId() + " is waiting in station " + passenger.getStation() + " (ShuttleCallCommand)");
         shuttle.registerObserver(passenger);
     }
 }
