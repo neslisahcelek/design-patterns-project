@@ -1,16 +1,9 @@
 package movement;
 
-import display.Display;
 import display.drawable.DrawableBehavior;
-import movement.movable.MovableBehavior;
-import observer.passenger.Passenger;
-import observer.shuttle.Shuttle;
 import manager.Process;
-import shuttlemanager.ShuttleManager;
-import shuttlemanager.Station;
-
-import java.lang.annotation.Target;
-import java.util.ArrayList;
+import movement.movable.MovableBehavior;
+import observer.shuttle.Shuttle;
 
 import static display.Display.updateDirection;
 
