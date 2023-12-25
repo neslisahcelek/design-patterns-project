@@ -27,6 +27,12 @@ public class ShuttleManager {
         this.shuttle = shuttle;
         distances = Chart.getChart();
     }
+
+    public static void startRoute(ArrayList<Passenger> passengers)
+    {
+        findShortestRoute(shuttle, passengers);
+        shuttle.notifyObservers();
+    }
     /*
     public static void main(String[] args) {
 
