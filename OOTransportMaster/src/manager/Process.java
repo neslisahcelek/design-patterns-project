@@ -34,8 +34,16 @@ public class Process {
     public static void display()
     {
         sm = new ShuttleManager(shuttle);
-
         Display display = new Display();
+
+
+        Image image = Image.getImage();
+        System.out.println(image.toString());
+        Image image2 = Image.getImage();
+        System.out.println(image2.toString());
+
+        display.createDisplay(image.getMap());
+
 
         Display.updateDrawableArrayList();
         newImage = cloneArray();
