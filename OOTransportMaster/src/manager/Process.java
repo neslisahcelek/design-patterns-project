@@ -73,7 +73,7 @@ public class Process {
 
     static void addPassenger(int positionI, int positionJ)
     {
-        int maxPassenger = 7;
+        int maxPassenger = 5;
 
 
         if(isValid(positionI,positionJ) && passengers.size() < maxPassenger) {
@@ -83,7 +83,7 @@ public class Process {
 
             applyShuttleCallCommand(passenger, shuttles.get(0));
         }
-        else if (passengers.size() == maxPassenger) {
+        else if (shuttles.get(0).getPassengers().size() == maxPassenger) {
             sm.isRouteStarted = true;
         }
     }

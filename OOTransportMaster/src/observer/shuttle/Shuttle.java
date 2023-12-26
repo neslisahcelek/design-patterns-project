@@ -34,4 +34,7 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
     public void notifyObservers() { //Shuttle starts moving
         passengers.forEach(Observer::update);
     }
+    public ArrayList<Observer> getPassengers() {
+        return passengers;
+    }
 }
