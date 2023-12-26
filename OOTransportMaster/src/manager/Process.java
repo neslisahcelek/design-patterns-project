@@ -6,6 +6,7 @@ import command.ShuttleApp;
 import command.ShuttleCallCommand;
 import display.Display;
 import display.Image;
+import display.InitialImage;
 import inputmanager.Click;
 import inputmanager.Input;
 import movement.Movement;
@@ -28,7 +29,10 @@ public class Process {
 
     public static Shuttle shuttle = new Shuttle();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
-    private static Color[][] newImage = new Color[Image.getImage().getMap().length][Image.getImage().getMap()[0].length];
+    // private static Color[][] newImage = new Color[Image.getImage().getMap().length][Image.getImage().getMap()[0].length];
+
+
+
     static ShuttleManager sm;
 
     public static void display()
@@ -46,8 +50,10 @@ public class Process {
 
 
         Display.updateDrawableArrayList();
-        newImage = cloneArray();
-        Display.updateImage(newImage);
+        //newImage = cloneArray();
+        InitialImage.getInitialImage().setNewImage(cloneArray());
+        //Display.updateImage(newImage);
+        Display.updateImage(InitialImage.getInitialImage().getNewImage());
         display.createDisplay(Image.getImage().getMap());
 
         Input.mouseEvent(display.getFrame());
@@ -61,9 +67,16 @@ public class Process {
                 Movement.updatePositions();
 
                 Display.updateDrawableArrayList();
-                newImage = cloneArray();
-                Display.updateImage(newImage);
-                display.updateDisplay(newImage);
+
+
+                //newImage = cloneArray();
+                InitialImage.getInitialImage().setNewImage(cloneArray());
+                //Display.updateImage(newImage);
+                Display.updateImage(InitialImage.getInitialImage().getNewImage());
+                //display.updateDisplay(newImage);
+                display.updateDisplay(InitialImage.getInitialImage().getNewImage());
+                //display.updateDisplay(newImage);
+
             }
             Process.checkClickRequests();
             scene++;
