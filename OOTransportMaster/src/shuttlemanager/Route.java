@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Route {
 
-    int distance;
-    List<Integer> path;
+    private int distance;
+    private List<Integer> path;
 
     public Route(int distance, List<Integer> path) {
         this.distance = distance;

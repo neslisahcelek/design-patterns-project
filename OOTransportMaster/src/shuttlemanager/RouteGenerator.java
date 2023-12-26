@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteGenerator {
-    static Route[][] distances = Chart.getChart();
     static List<Integer> route;
 
     public static List<Integer> generateRoute(Shuttle shuttle, List<Passenger> passengers) {
@@ -58,10 +57,10 @@ public class RouteGenerator {
             int toStation = shortestRoute.get(i + 1) - 1;
 
             if (newRoute == null) {
-                newRoute = distances[fromStation][toStation].path;
+                newRoute = Chart.getPath(fromStation,toStation);
             } else {
                 newRoute.remove(newRoute.size()-1);
-                newRoute.addAll(distances[fromStation][toStation].path);
+                newRoute.addAll(Chart.getPath(fromStation,toStation));
             }
         }
 
@@ -105,7 +104,7 @@ public class RouteGenerator {
         for (int i = 0; i < route.size() - 2; i++) {
             int fromStation = route.get(i);
             int toStation = route.get(i + 1);
-            totalDistance += distances[fromStation][toStation].getDistance();
+            totalDistance += Chart.getDistance(fromStation,toStation);
         }
         return totalDistance;
     }
