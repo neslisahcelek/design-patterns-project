@@ -5,7 +5,6 @@ import java.util.List;
 public class Route {
 
     int distance;
-    //int[] path;
     List<Integer> path;
 
     public Route(int distance, List<Integer> path) {
