@@ -10,8 +10,10 @@ import display.InitialImage;
 import inputmanager.Click;
 import inputmanager.Input;
 import movement.Movement;
+import movement.Position;
 import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
+import shuttlemanager.Chart;
 import shuttlemanager.ShuttleManager;
 import shuttlemanager.Station;
 
@@ -63,7 +65,7 @@ public class Process {
             if(hasChange) {
                 hasChange=false;
 
-                sm.checkShuttleManager(passengers);
+                sm.updateShuttleStates();
                 Movement.updatePositions();
 
                 Display.updateDrawableArrayList();
@@ -90,7 +92,6 @@ public class Process {
         return Arrays.stream(Image.getImage().getMap()).map(Color[]::clone).toArray(Color[][]::new);
     }
 
-
     static void addPassenger(int positionI, int positionJ) {
         int maxPassenger = 5;
 
@@ -103,7 +104,7 @@ public class Process {
             applyShuttleCallCommand(passenger, shuttle);
         }
         else if (shuttle.getPassengers().size() == maxPassenger) {
-            sm.isRouteStarted = true;
+            sm.shuttleState = 1;
         }
     }
 
@@ -161,10 +162,10 @@ public class Process {
         double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
 
-        for (int i = 0; i < Station.stations.length ; i++) {
+        for (int i = 0; i < Chart.getStationList().length ; i++) {
 
-            double currentDistance = findDistance(Station.getStation(i).getPosition().getI(),
-                    Station.getStation(i).getPosition().getJ(),positionI,positionJ);
+            double currentDistance = findDistance(Chart.getStation(i).getPosition().getI(),
+                    Chart.getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(currentDistance < minDistance )
             { minDistance = currentDistance; closestStation = i; }
@@ -198,10 +199,10 @@ public class Process {
         int range = 100;
         double currentDistance;
 
-        for (int i = 0; i < Station.stations.length ; i++) {
+        for (int i = 0; i < Chart.getStationList().length ; i++) {
 
-            currentDistance = findDistance(Station.getStation(i).getPosition().getI(),
-                    Station.getStation(i).getPosition().getJ(),positionI,positionJ);
+            currentDistance = findDistance(Chart.getStation(i).getPosition().getI(),
+                    Chart.getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(range >= currentDistance) {return true;}
         }
@@ -237,6 +238,12 @@ public class Process {
 
     public static Shuttle getShuttle() {
         return shuttle;
+    }
+
+    public static boolean samePositions(Position firstPosition, Position secondPosition)
+    {
+        return firstPosition.getI() == secondPosition.getI()
+                && firstPosition.getJ() == secondPosition.getJ();
     }
 
 

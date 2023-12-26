@@ -14,105 +14,90 @@ import static movement.Movement.calculateVelocityDirection;
 
 
 public class ShuttleManager {
-    static Shuttle shuttle;
-    static List<Integer> route;
+    final static int waiting_for_passengers = 0;
+    final static int calculating_path_ = 1;
+    final static int on_the_road = 2;
+    final static int on_the_station = 3;
+    final static int passengers_are_boarding = 4;
+    final static int waiting = 5;
+    final static int leaving_the_station = 6;
+    final static int on_the_last_station = 7;
+
+    public static int shuttleState = waiting_for_passengers;
+
     static int step = 0;
-    public static int shuttleState = 0;
     int timeStart;
     int timeEnd;
-    public boolean isRouteStarted = false;
-    static boolean isPathCalculated = false;
+    int waitingTime = 5;
+
+    static Shuttle shuttle;
+    static List<Integer> route;
 
     public ShuttleManager(Shuttle shuttle) {
-        this.shuttle = shuttle;
+        ShuttleManager.shuttle = shuttle;
     }
 
-    public static void startRoute(ArrayList<Passenger> passengers)
-    {
-        route = RouteGenerator.generateRoute(shuttle, passengers);
+    public void updateShuttleStates() {
 
-        System.out.println("-------------------------");
-        System.out.println("Shuttle is coming!");
-        System.out.println("-------------------------");
-
-        shuttle.notifyObservers();
-        isPathCalculated = true;
-    }
-
-
-    public void checkShuttleManager(ArrayList<Passenger> passengers){
-
-        if (isRouteStarted && !isPathCalculated) {
-            startRoute(passengers);
-        }
-        if (isPathCalculated){
-            updateShuttleStates();
-        }
-    }
-
-    public void updateShuttleStates()
-    {
-        boolean arrivedStation = shuttle.getMovable().position.getI() ==
-                Station.getStation(route.get(step)).getPosition().getI()
-                && shuttle.getMovable().position.getJ() ==
-                        Station.getStation(route.get(step)).getPosition().getJ()
-                && shuttleState == 0;
-
-        if(arrivedStation)
+        if(shuttleState == calculating_path_)
         {
+            route = RouteGenerator.generateRoute(shuttle, manager.Process.passengers);
+
+            System.out.println("-------------------------");
+            System.out.println("Shuttle is coming!");
+            System.out.println("-------------------------");
+
+            shuttle.notifyObservers();
+            shuttleState = on_the_road;
+        }
+        else if(shuttleState == on_the_road) {
+
+            if (Process.samePositions(shuttle.getMovable().position,
+                    Chart.getStation(route.get(step)).getPosition()))
+            {
+                if(step == route.size()-1)
+                {shuttleState = on_the_last_station;}
+                else {shuttleState = on_the_station;}
+            }
+        }
+        else if(shuttleState == on_the_station) {
+
             shuttle.getMovable().immutable = true;
             shuttle.setStation(route.get(step));
-            //System.out.println(route.get(step));
+
             if(anyPassenger()) {
                 getOnPassengers();
-                shuttleState = 2;
+                shuttleState = passengers_are_boarding;
             }
-            else {shuttleState = 4;}
+            else {shuttleState = leaving_the_station;}
+        }
+        else if (shuttleState == passengers_are_boarding) {
 
-            Process.hasChange = true;
+            timeStart = Process.scene;
+            shuttleState = waiting;
         }
-        else if (shuttleState == 2)
-        {
-            startWaiting();
-            Process.hasChange = true;
-        }
-        else if (shuttleState == 3)
-        {
-            waiting();
-            Process.hasChange = true;
-        }
-        else if (shuttleState == 4)
-        {
-            hitTheRoad();
-            Process.hasChange = true;
-        }
+        else if (shuttleState == waiting) {
 
+            timeEnd = Process.scene;
+            if (timeEnd - timeStart > waitingTime) {
+                shuttleState = leaving_the_station;
+            }
+        }
+        else if (shuttleState == leaving_the_station) {
+
+            step++;
+            updateVelocityDirection(route.get(step));
+            shuttle.getMovable().immutable = false;
+            shuttleState = on_the_road;
+        }
+        else if(shuttleState == on_the_last_station) {
+
+            System.out.println("yolcular");
+        }
+        Process.hasChange = true;
     }
 
-    public void startWaiting()
-    {
-        timeStart = Process.scene;
-        shuttleState = 3;
-
-    }
-
-    public void waiting() {
-        //System.out.println(timeStart + " " + timeEnd);
-        timeEnd = Process.scene;
-        if (timeEnd - timeStart > 10) {
-            shuttleState = 4;
-        }
-    }
-
-    public void hitTheRoad() {
-        step++;
-        updateVelocityDirection(route.get(step));
-        shuttle.getMovable().immutable = false;
-        shuttleState = 0;
-    }
-
-    public static void getOnPassengers()
-    {
+    public static void getOnPassengers() {
         int i = 0;
         while (i < Process.passengers.size())
         {
@@ -124,8 +109,7 @@ public class ShuttleManager {
         }
     }
 
-    static boolean anyPassenger()
-    {
+    static boolean anyPassenger() {
         for (int i = 0; i < Process.passengers.size() ; i++) {
 
             if (route.get(step) == Process.passengers.get(i).getStation())
@@ -136,9 +120,8 @@ public class ShuttleManager {
         return false;
     }
 
-    public static void updateVelocityDirection(int destinationStation)
-    {
-        Station station = Station.getStation(destinationStation);
+    public static void updateVelocityDirection(int destinationStation) {
+        Station station = Chart.getStation(destinationStation);
 
         shuttle.setTargetPosition(station.position);
 
