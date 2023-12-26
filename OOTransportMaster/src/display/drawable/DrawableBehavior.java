@@ -6,6 +6,8 @@ public abstract class DrawableBehavior {
     public Position position;
     public boolean direction;
     public int type;
+    public int widthShift;
+    public int lengthShift;
 
     DrawableBehavior() {
         this.direction = true;

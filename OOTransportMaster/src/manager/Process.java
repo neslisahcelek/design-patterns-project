@@ -25,28 +25,24 @@ public class Process {
     public static int scene;
     public static boolean hasChange = false;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
-    public static ArrayList<Shuttle> shuttles = new ArrayList<>();
+
+    public static Shuttle shuttle = new Shuttle();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
-    private static Color[][] newImage = new Color[Image.getMap().length][Image.getMap()[0].length];
+    private static Color[][] newImage = new Color[Image.getImage().getMap().length][Image.getImage().getMap()[0].length];
     static ShuttleManager sm;
 
     public static void display()
     {
-        //Image.getImages();
-        addShuttle(Station.getStation(1).getPosition().getI(),Station.getStation(1).getPosition().getJ());
+        sm = new ShuttleManager(shuttle);
 
         Display display = new Display();
-        display.createDisplay(Image.getMap());
 
-        //Display.updateDrawableArrayList();
-        //newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
-       // Display.updateImage(newImage);
-        //display.updateDisplay(newImage);
+        Display.updateDrawableArrayList();
+        newImage = cloneArray();
+        Display.updateImage(newImage);
+        display.createDisplay(Image.getImage().getMap());
 
         Input.mouseEvent(display.getFrame());
-        shuttles.get(0).getMovable().setImmutable(false);
-        //ShuttleManager sm = new ShuttleManager(shuttles.get(0));
-        sm = new ShuttleManager(shuttles.get(0));
 
         Timer timer = new Timer(100, e -> {
 
@@ -57,7 +53,7 @@ public class Process {
                 Movement.updatePositions();
 
                 Display.updateDrawableArrayList();
-                newImage = Arrays.stream(Image.getMap()).map(Color[]::clone).toArray(Color[][]::new);
+                newImage = cloneArray();
                 Display.updateImage(newImage);
                 display.updateDisplay(newImage);
             }
@@ -69,41 +65,43 @@ public class Process {
         timer.start();
     }
 
+    static Color[][] cloneArray(){
+        return Arrays.stream(Image.getImage().getMap()).map(Color[]::clone).toArray(Color[][]::new);
+    }
 
 
-    static void addPassenger(int positionI, int positionJ)
-    {
+    static void addPassenger(int positionI, int positionJ) {
         int maxPassenger = 5;
 
-
         if(isValid(positionI,positionJ) && passengers.size() < maxPassenger) {
+
             int station = findClosestStation(positionI,positionJ);
             Passenger passenger = new Passenger(station,positionI,positionJ);
             passengers.add(passenger);
 
-            applyShuttleCallCommand(passenger, shuttles.get(0));
+            applyShuttleCallCommand(passenger, shuttle);
         }
-        else if (shuttles.get(0).getPassengers().size() == maxPassenger) {
+        else if (shuttle.getPassengers().size() == maxPassenger) {
             sm.isRouteStarted = true;
         }
     }
 
-    static void removePassenger(int positionI, int positionJ)
-    {
+    static void removePassenger(int positionI, int positionJ) {
         if(!passengers.isEmpty() && isValid(positionI,positionJ)) {
             Passenger passenger = findClosestPassenger(positionI, positionJ);
             passengers.remove(passenger);
 
-            applyPassengerCancelCommand(passenger, shuttles.get(0));
+            applyPassengerCancelCommand(passenger, shuttle);
         }
     }
 
-    public static void removePassenger(Passenger passenger)
-    {
+    public static void removePassenger(Passenger passenger) {
         if(!passengers.isEmpty())
         {passengers.remove(passenger);}
-
     }
+
+
+
 
     private static void applyShuttleCallCommand(Passenger passenger, Shuttle shuttle) {
         Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
@@ -115,13 +113,6 @@ public class Process {
         Command passengerCancelCommand = new PassengerCancelCommand(shuttle, passenger);
         shuttleApp.setCommand(passengerCancelCommand);
         shuttleApp.takeCommandCall(passengerCancelCommand);
-    }
-
-    static void start() {
-        ShuttleManager shuttleManager = new ShuttleManager(shuttles.get(0));
-        if (passengers.size() == 10) {
-           // shuttleManager.startRoute();
-        }
     }
 
     private static Passenger findClosestPassenger(int positionI,int positionJ) {
@@ -196,12 +187,6 @@ public class Process {
         return false;
     }
 
-    static void addShuttle(double positionI, double positionJ)
-    {
-        Shuttle shuttle = new Shuttle(positionI,positionJ);
-        shuttles.add(shuttle);
-    }
-
     public static void applyRequests()
     {
         while(Input.getClicks().size()>0)
@@ -212,7 +197,6 @@ public class Process {
             {Process.removePassenger(click.getI(), click.getJ());}
             else{Process.addPassenger(click.getI(), click.getJ());
             }
-           
             Input.getClicks().remove(click);
         }
     }
@@ -229,10 +213,9 @@ public class Process {
     public static ArrayList<Passenger> getPassengers() {
         return passengers;
     }
-    //bunlar sadece dönse ama asıl array değiştirilebiliyor input classına bak
 
-    public static ArrayList<Shuttle> getShuttles() {
-        return shuttles;
+    public static Shuttle getShuttle() {
+        return shuttle;
     }
 
 
