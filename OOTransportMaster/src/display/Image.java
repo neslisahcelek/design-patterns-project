@@ -8,13 +8,13 @@ import java.io.IOException;
 
 public class Image
 {
-    private static Image images = null;
+    private static Image image = null;
     private Image(){}
-    public static Image getImages() {
-        if (images == null) {
-            images = new Image();
+    public static Image getImage() {
+        if (image == null) {
+            image = new Image();
         }
-        return images;
+        return image;
     }
 
     private static Color[][] passenger;
@@ -22,42 +22,35 @@ public class Image
     private static Color[][] shuttle;
     private static Color[][] mirroredPassenger;
     private static Color[][] mirroredShuttle;
-
-    //private static final String filePath = "C:\\Users\\salih\\IdeaProjects\\OOTransportMaster\\design-patterns-project\\Image\\";
     private static final String filePath = Common.filePath;
 
 
-
-
-    public static Color[][] getMap() {
+    public Color[][] getMap() {
         if (map == null) {
             map = createImage("map.png");
         }
         return map;
     }
-    public static Color[][] getPassenger() {
+    public Color[][] getPassenger() {
         if (passenger == null) {
             passenger = createImage("passenger.png");
         }
         return passenger;
     }
-
-    public static Color[][] getShuttle() {
+    public Color[][] getShuttle() {
         if (shuttle == null) {
             shuttle = createImage("shuttle.png");
         }
         return shuttle;
     }
-
-    public static Color[][] getMirroredPassenger() {
+    public Color[][] getMirroredPassenger() {
         if (mirroredPassenger == null) {
             mirroredPassenger = createImage("passenger.png");
             mirroredPassenger = Display.mirror(mirroredPassenger);
         }
         return mirroredPassenger;
     }
-
-    public static Color[][] getMirroredShuttle() {
+    public Color[][] getMirroredShuttle() {
         if (mirroredShuttle == null) {
             mirroredShuttle = createImage("shuttle.png");
             mirroredShuttle = Display.mirror(mirroredShuttle);
@@ -65,16 +58,14 @@ public class Image
         return mirroredShuttle;
     }
 
-    private static Color[][] createImage(String path)
-    {
+    private static Color[][] createImage(String path) {
         return PNGtoColorArray(filePath+path);
     }
-
     private static Color[][] PNGtoColorArray(String filePath) {
 
         File file = new File(filePath);
         BufferedImage image;
-//BufferedImage image = null;
+
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {

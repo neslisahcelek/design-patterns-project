@@ -91,11 +91,7 @@ public class Movement {
 
 
     public static void updatePositions () {
-
-        for (Shuttle s : Process.shuttles) {
-            updatePositions(s.getMovable(), s.getDrawable(), s.getTargetPosition());
-        }
-
+        updatePositions(Process.shuttle.getMovable(), Process.shuttle.getDrawable(), Process.shuttle.getTargetPosition());
     }
 
     private static void updatePositions(MovableBehavior movable, DrawableBehavior drawable, Position destinationPosition)

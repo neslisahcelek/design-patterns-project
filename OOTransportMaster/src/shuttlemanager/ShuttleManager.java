@@ -21,7 +21,7 @@ public class ShuttleManager {
     int timeStart;
     int timeEnd;
     static Route[][] distances = Chart.getChart();
-    static public boolean isRouteStarted = false;
+    public boolean isRouteStarted = false;
     static boolean isPathCalculated = false;
 
     public ShuttleManager(Shuttle shuttle) {
@@ -41,7 +41,7 @@ public class ShuttleManager {
 
     public static void findShortestRoute(Shuttle shuttle, List<Passenger> passengers) {
         int currentStation = shuttle.getStation();
-        List<Integer> passengerStations = addStationstoList(passengers);
+        List<Integer> passengerStations = addStationsToList(passengers);
 
         List<Integer> shortestRoute = null;
         int minDistance = Integer.MAX_VALUE;
@@ -60,7 +60,7 @@ public class ShuttleManager {
         addRemainingStations(shortestRoute);
     }
 
-    private static List<Integer> addStationstoList(List<Passenger> passengers) {
+    private static List<Integer> addStationsToList(List<Passenger> passengers) {
         List<Integer> passengerStations = new ArrayList<>();
 
         for (Passenger p : passengers) {
@@ -231,7 +231,6 @@ public class ShuttleManager {
         }
         return false;
     }
-
 
     public static void updateVelocityDirection(int destinationStation)
     {
