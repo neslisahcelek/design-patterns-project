@@ -2,7 +2,6 @@ package observer.passenger;
 
 
 import display.drawable.DrawablePassenger;
-import manager.Process;
 import movement.movable.MovablePassenger;
 import observer.Observer;
 

@@ -1,13 +1,11 @@
 package observer.shuttle;
 
 import display.drawable.DrawableShuttle;
-import manager.Process;
 import movement.Position;
 import movement.movable.MovableShuttle;
 import observer.Observer;
 import observer.Subject;
 import shuttlemanager.Chart;
-import shuttlemanager.Station;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,6 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
         super.targetPosition = new Position(5,5);
     }
 
-
     @Override
     public void registerObserver(Observer passenger) {
         passengers.add(passenger);
@@ -39,6 +36,7 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
     public void notifyObservers() { //Shuttle starts moving
         passengers.forEach(Observer::update);
     }
+
     public ArrayList<Observer> getPassengers() {
         return passengers;
     }

@@ -21,7 +21,6 @@ public class OnTheStationState implements State{
         shuttle.setStation(route.get(step));
 
         if(anyPassenger(route, step)) {
-            getOnPassengers(route, step);
             shuttleManager.setState(shuttleManager.getPassengersAreBoardingState());
         }
         else {
@@ -38,17 +37,5 @@ public class OnTheStationState implements State{
             }
         }
         return false;
-    }
-
-    public static void getOnPassengers(List<Integer> route, int step) {
-        int i = 0;
-        while (i < Process.passengers.size())
-        {
-            if (route.get(step) == Process.passengers.get(i).getStation())
-            {
-                Process.removePassenger(Process.passengers.get(i));
-            }
-            else {i++;}
-        }
     }
 }

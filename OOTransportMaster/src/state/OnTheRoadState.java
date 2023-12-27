@@ -7,6 +7,8 @@ import java.util.List;
 
 public class OnTheRoadState implements State{
     ShuttleManager shuttleManager;
+    boolean write = true;
+
     public OnTheRoadState(ShuttleManager shuttleManager) {
         this.shuttleManager = shuttleManager;
     }
@@ -16,13 +18,21 @@ public class OnTheRoadState implements State{
         int step = shuttleManager.getStep();
         List<Integer> route = shuttleManager.getRoute();
 
-        if (Process.samePositions(shuttleManager.getShuttle().getMovable().position,
+        if (write) {
+            System.out.println("Shuttle is on the road (OnTheRoadState)");
+            write = false;
+        }
+
+        //if the shuttle is on the station
+        if (Process.isSamePositions(shuttleManager.getShuttle().getMovable().position,
                 Chart.getChart().getStation(route.get(step)).getPosition()))
         {
+            //if the shuttle is on the last station
             if(step == route.size()-1) {
                 shuttleManager.setState(shuttleManager.getOnTheLastStationState());
             }
             else {
+                write = true;
                 shuttleManager.setState(shuttleManager.getOnTheStationState());
             }
         }

@@ -15,53 +15,40 @@ import observer.passenger.Passenger;
 import observer.shuttle.Shuttle;
 import shuttlemanager.Chart;
 import shuttlemanager.ShuttleManager;
-import shuttlemanager.Station;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class Process {
-
     public static int scene;
-    public static boolean hasChange = false;
+    public static boolean hasChange = true;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
 
     public static Shuttle shuttle = new Shuttle();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
+    static ShuttleManager shuttleManager;
 
-
-    static ShuttleManager sm;
-
+    //start the program
     public static void display()
     {
-        sm = new ShuttleManager(shuttle);
+        shuttleManager = new ShuttleManager(shuttle);
         Display display = new Display();
 
+        Display.updateDrawableArrayList(); //check for new drawables
 
-        Image image = Image.getImage();
-        System.out.println(image.toString());
-        Image image2 = Image.getImage();
-        System.out.println(image2.toString());
-
-
-        Display.updateDrawableArrayList();
-        //newImage = cloneArray();
         InitialImage.getInitialImage().setNewImage(cloneArray());
-        //Display.updateImage(newImage);
         Display.updateImage(InitialImage.getInitialImage().getNewImage());
-        display.createDisplay(Image.getImage().getMap());
+        display.createDisplay(Image.getImage().getMap()); //create the display
 
         Input.mouseEvent(display.getFrame());
 
         Timer timer = new Timer(100, e -> {
-
             if(hasChange) {
                 hasChange=false;
 
-                sm.updateShuttleStates();
+                shuttleManager.updateShuttleStates(); //update shuttle state
                 Movement.updatePositions();
 
                 Display.updateDrawableArrayList();
@@ -79,10 +66,7 @@ public class Process {
         timer.start();
     }
 
-    static Color[][] cloneArray(){
-        return Arrays.stream(Image.getImage().getMap()).map(Color[]::clone).toArray(Color[][]::new);
-    }
-
+    //Passenger is waiting for the shuttle
     static void addPassenger(int positionI, int positionJ) {
         int maxPassenger = 5;
 
@@ -94,11 +78,12 @@ public class Process {
 
             applyShuttleCallCommand(passenger, shuttle);
         }
-        else if (shuttle.getPassengers().size() == maxPassenger) {
-            sm.shuttleState = sm.getCalculatingPathState();
+        else if (shuttle.getPassengers().size() == maxPassenger) { //shuttle is ready to go
+            shuttleManager.shuttleState = shuttleManager.getCalculatingPathState();
         }
     }
 
+    //Passenger canceled the request
     static void removePassenger(int positionI, int positionJ) {
         if(!passengers.isEmpty() && isValid(positionI,positionJ)) {
             Passenger passenger = findClosestPassenger(positionI, positionJ);
@@ -108,13 +93,11 @@ public class Process {
         }
     }
 
+    //Passenger boarded the shuttle
     public static void removePassenger(Passenger passenger) {
         if(!passengers.isEmpty())
         {passengers.remove(passenger);}
     }
-
-
-
 
     private static void applyShuttleCallCommand(Passenger passenger, Shuttle shuttle) {
         Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
@@ -128,14 +111,13 @@ public class Process {
         shuttleApp.takeCommandCall(passengerCancelCommand);
     }
 
+    //find the closest passenger to clicked position
     private static Passenger findClosestPassenger(int positionI,int positionJ) {
 
         double minDistance = Double.MAX_VALUE;
         Passenger closestPassenger= null;
 
         for (int i = 0; i < passengers.size() ; i++) {
-
-
             double currentDistance = findDistance(
                     (int) passengers.get(i).getMovable().getPosition().getI(),
                     (int) passengers.get(i).getMovable().getPosition().getJ(),
@@ -149,6 +131,7 @@ public class Process {
         return closestPassenger;
     }
 
+    //find the closest station to passenger
     private static int findClosestStation(int positionI,int positionJ) {
         double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
@@ -171,20 +154,7 @@ public class Process {
                             Math.pow(arrayPositionJ - positionJ, 2));
     }
 
-    static void callCommand(Shuttle shuttle, Passenger passenger) {
-        Command shuttleCallCommand = new ShuttleCallCommand(shuttle, passenger);
-        setCommand(shuttleCallCommand);
-    }
-
-    static void setCommand(Command command) {
-        shuttleApp.setCommand(command);
-        takeCommandCall(command);
-    }
-
-    static void takeCommandCall(Command command) {
-        shuttleApp.takeCommandCall(command);
-    }
-
+    //check if the passenger is close enough to a station
     static boolean isValid(int positionI,int positionJ)
     {
         int range = 100;
@@ -200,6 +170,7 @@ public class Process {
         return false;
     }
 
+    //apply the click requests
     public static void applyRequests()
     {
         while(Input.getClicks().size()>0)
@@ -214,6 +185,7 @@ public class Process {
         }
     }
 
+    //check for click requests
     public static void checkClickRequests()
     {
         if(0 != Input.getClicks().size())
@@ -223,21 +195,19 @@ public class Process {
         }
     }
 
-    public static ArrayList<Passenger> getPassengers() {
-        return passengers;
-    }
-
-    public static Shuttle getShuttle() {
-        return shuttle;
-    }
-
-    public static boolean samePositions(Position firstPosition, Position secondPosition)
+    public static boolean isSamePositions(Position firstPosition, Position secondPosition)
     {
         return firstPosition.getI() == secondPosition.getI()
                 && firstPosition.getJ() == secondPosition.getJ();
     }
 
+    static Color[][] cloneArray(){
+        return Arrays.stream(Image.getImage().getMap()).map(Color[]::clone).toArray(Color[][]::new);
+    }
 
+    public static Shuttle getShuttle() {
+        return shuttle;
+    }
 }
 
 
