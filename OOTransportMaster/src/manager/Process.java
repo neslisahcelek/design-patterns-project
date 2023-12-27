@@ -30,6 +30,7 @@ public class Process {
     public static final ShuttleApp shuttleApp = new ShuttleApp();
     static ShuttleManager shuttleManager;
 
+    //start the program
     public static void display()
     {
         shuttleManager = new ShuttleManager(shuttle);
@@ -39,7 +40,7 @@ public class Process {
 
         InitialImage.getInitialImage().setNewImage(cloneArray());
         Display.updateImage(InitialImage.getInitialImage().getNewImage());
-        display.createDisplay(Image.getImage().getMap());
+        display.createDisplay(Image.getImage().getMap()); //create the display
 
         Input.mouseEvent(display.getFrame());
 
@@ -47,7 +48,7 @@ public class Process {
             if(hasChange) {
                 hasChange=false;
 
-                shuttleManager.updateShuttleStates();
+                shuttleManager.updateShuttleStates(); //update shuttle state
                 Movement.updatePositions();
 
                 Display.updateDrawableArrayList();
@@ -65,6 +66,7 @@ public class Process {
         timer.start();
     }
 
+    //Passenger is waiting for the shuttle
     static void addPassenger(int positionI, int positionJ) {
         int maxPassenger = 5;
 
@@ -81,6 +83,7 @@ public class Process {
         }
     }
 
+    //Passenger canceled the request
     static void removePassenger(int positionI, int positionJ) {
         if(!passengers.isEmpty() && isValid(positionI,positionJ)) {
             Passenger passenger = findClosestPassenger(positionI, positionJ);
@@ -90,6 +93,7 @@ public class Process {
         }
     }
 
+    //Passenger boarded the shuttle
     public static void removePassenger(Passenger passenger) {
         if(!passengers.isEmpty())
         {passengers.remove(passenger);}
@@ -107,14 +111,13 @@ public class Process {
         shuttleApp.takeCommandCall(passengerCancelCommand);
     }
 
+    //find the closest passenger to clicked position
     private static Passenger findClosestPassenger(int positionI,int positionJ) {
 
         double minDistance = Double.MAX_VALUE;
         Passenger closestPassenger= null;
 
         for (int i = 0; i < passengers.size() ; i++) {
-
-
             double currentDistance = findDistance(
                     (int) passengers.get(i).getMovable().getPosition().getI(),
                     (int) passengers.get(i).getMovable().getPosition().getJ(),
@@ -128,6 +131,7 @@ public class Process {
         return closestPassenger;
     }
 
+    //find the closest station to passenger
     private static int findClosestStation(int positionI,int positionJ) {
         double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
@@ -150,6 +154,7 @@ public class Process {
                             Math.pow(arrayPositionJ - positionJ, 2));
     }
 
+    //check if the passenger is close enough to a station
     static boolean isValid(int positionI,int positionJ)
     {
         int range = 100;
@@ -165,6 +170,7 @@ public class Process {
         return false;
     }
 
+    //apply the click requests
     public static void applyRequests()
     {
         while(Input.getClicks().size()>0)
@@ -179,6 +185,7 @@ public class Process {
         }
     }
 
+    //check for click requests
     public static void checkClickRequests()
     {
         if(0 != Input.getClicks().size())
@@ -186,10 +193,6 @@ public class Process {
             applyRequests();
             hasChange = true;
         }
-    }
-
-    public static Shuttle getShuttle() {
-        return shuttle;
     }
 
     public static boolean isSamePositions(Position firstPosition, Position secondPosition)
@@ -202,6 +205,9 @@ public class Process {
         return Arrays.stream(Image.getImage().getMap()).map(Color[]::clone).toArray(Color[][]::new);
     }
 
+    public static Shuttle getShuttle() {
+        return shuttle;
+    }
 }
 
 
