@@ -31,8 +31,6 @@ public class Process {
 
     public static Shuttle shuttle = new Shuttle();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
-    // private static Color[][] newImage = new Color[Image.getImage().getMap().length][Image.getImage().getMap()[0].length];
-
 
 
     static ShuttleManager sm;
@@ -47,8 +45,6 @@ public class Process {
         System.out.println(image.toString());
         Image image2 = Image.getImage();
         System.out.println(image2.toString());
-
-        display.createDisplay(image.getMap());
 
 
         Display.updateDrawableArrayList();
@@ -70,14 +66,9 @@ public class Process {
 
                 Display.updateDrawableArrayList();
 
-
-                //newImage = cloneArray();
                 InitialImage.getInitialImage().setNewImage(cloneArray());
-                //Display.updateImage(newImage);
                 Display.updateImage(InitialImage.getInitialImage().getNewImage());
-                //display.updateDisplay(newImage);
                 display.updateDisplay(InitialImage.getInitialImage().getNewImage());
-                //display.updateDisplay(newImage);
 
             }
             Process.checkClickRequests();
@@ -162,10 +153,10 @@ public class Process {
         double minDistance = Double.MAX_VALUE;
         int closestStation = 0;
 
-        for (int i = 0; i < Chart.getStationList().length ; i++) {
+        for (int i = 0; i < Chart.getChart().getStationList().length ; i++) {
 
-            double currentDistance = findDistance(Chart.getStation(i).getPosition().getI(),
-                    Chart.getStation(i).getPosition().getJ(),positionI,positionJ);
+            double currentDistance = findDistance(Chart.getChart().getStation(i).getPosition().getI(),
+                    Chart.getChart().getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(currentDistance < minDistance )
             { minDistance = currentDistance; closestStation = i; }
@@ -199,10 +190,10 @@ public class Process {
         int range = 100;
         double currentDistance;
 
-        for (int i = 0; i < Chart.getStationList().length ; i++) {
+        for (int i = 0; i < Chart.getChart().getStationList().length ; i++) {
 
-            currentDistance = findDistance(Chart.getStation(i).getPosition().getI(),
-                    Chart.getStation(i).getPosition().getJ(),positionI,positionJ);
+            currentDistance = findDistance(Chart.getChart().getStation(i).getPosition().getI(),
+                    Chart.getChart().getStation(i).getPosition().getJ(),positionI,positionJ);
 
             if(range >= currentDistance) {return true;}
         }

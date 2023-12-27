@@ -57,10 +57,10 @@ public class RouteGenerator {
             int toStation = shortestRoute.get(i + 1) - 1;
 
             if (newRoute == null) {
-                newRoute = Chart.getPath(fromStation,toStation);
+                newRoute = Chart.getChart().getPath(fromStation,toStation);
             } else {
                 newRoute.remove(newRoute.size()-1);
-                newRoute.addAll(Chart.getPath(fromStation,toStation));
+                newRoute.addAll(Chart.getChart().getPath(fromStation,toStation));
             }
         }
 
@@ -104,7 +104,7 @@ public class RouteGenerator {
         for (int i = 0; i < route.size() - 2; i++) {
             int fromStation = route.get(i);
             int toStation = route.get(i + 1);
-            totalDistance += Chart.getDistance(fromStation,toStation);
+            totalDistance += Chart.getChart().getDistance(fromStation,toStation);
         }
         return totalDistance;
     }
