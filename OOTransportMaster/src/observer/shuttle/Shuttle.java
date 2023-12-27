@@ -17,10 +17,10 @@ public class Shuttle extends IShuttle implements Subject { //Receiver
     public Shuttle() {
         passengers = new ArrayList<>();
         super.station = 1;
-        super.movable = new MovableShuttle(Chart.getStation(1).getPosition().getI(),
-                Chart.getStation(1).getPosition().getJ());
-        super.drawable = new DrawableShuttle(Chart.getStation(1).getPosition().getI(),
-                Chart.getStation(1).getPosition().getJ());
+        super.movable = new MovableShuttle(Chart.getChart().getStation(1).getPosition().getI(),
+                Chart.getChart().getStation(1).getPosition().getJ());
+        super.drawable = new DrawableShuttle(Chart.getChart().getStation(1).getPosition().getI(),
+                Chart.getChart().getStation(1).getPosition().getJ());
         super.targetPosition = new Position(5,5);
     }
 
