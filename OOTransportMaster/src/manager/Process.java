@@ -21,17 +21,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class Process {
-
     public static int scene;
-    public static boolean hasChange = false;
+    public static boolean hasChange = true;
     public static ArrayList<Passenger> passengers = new ArrayList<>();
 
     public static Shuttle shuttle = new Shuttle();
     public static final ShuttleApp shuttleApp = new ShuttleApp();
-
-
     static ShuttleManager shuttleManager;
 
     public static void display()
@@ -48,7 +44,6 @@ public class Process {
         Input.mouseEvent(display.getFrame());
 
         Timer timer = new Timer(100, e -> {
-
             if(hasChange) {
                 hasChange=false;
 
