@@ -104,7 +104,7 @@ public class Process {
             applyShuttleCallCommand(passenger, shuttle);
         }
         else if (shuttle.getPassengers().size() == maxPassenger) {
-            sm.shuttleState = 1;
+            sm.shuttleState = sm.getCalculatingPathState();
         }
     }
 
