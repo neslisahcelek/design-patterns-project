@@ -14,7 +14,7 @@ public class ShuttleManager {
     State calculatingPathState;
     State onTheRoadState;
     State onTheStationState;
-    State passengersAreBoardingState;
+    State passengerBoardingState;
     State waitingState;
     State leavingTheStationState;
     State onTheLastStationState;
@@ -32,7 +32,7 @@ public class ShuttleManager {
         calculatingPathState = new CalculatingPathState(this);
         onTheRoadState = new OnTheRoadState(this);
         onTheStationState = new OnTheStationState(this);
-        passengersAreBoardingState = new PassengerBoardingState(this);
+        passengerBoardingState = new PassengerBoardingState(this);
         waitingState = new WaitingState(this);
         leavingTheStationState = new LeavingTheStationState(this);
         onTheLastStationState = new OnTheLastStationState(this);
@@ -74,7 +74,7 @@ public class ShuttleManager {
     }
 
     public State getPassengersAreBoardingState() {
-        return passengersAreBoardingState;
+        return passengerBoardingState;
     }
 
     public State getWaitingState() {
