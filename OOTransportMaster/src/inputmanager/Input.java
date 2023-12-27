@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class Input
 {
-
     private static ArrayList<Click> clicks = new ArrayList<>();
 
     public static void mouseEvent(Frame frame)
