@@ -49,7 +49,7 @@ public class RouteGenerator {
     }
 
     public static void addRemainingStations(List<Integer> shortestRoute) {
-        System.out.println("Shortest Route: " + shortestRoute);
+        //System.out.println("Shortest Route: " + shortestRoute);
         List<Integer> newRoute = null;
 
         for (int i = 0; i < shortestRoute.size() - 1; i++) {
@@ -68,7 +68,7 @@ public class RouteGenerator {
             newRoute.set(i, newRoute.get(i) + 1) ;
         }
 
-        System.out.println("Shortest Route With Remaining Stations: " + newRoute);
+        //System.out.println("Shortest Route With Remaining Stations: " + newRoute);
         route = newRoute;
     }
 
