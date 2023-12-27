@@ -17,7 +17,7 @@ public class OnTheRoadState implements State{
         List<Integer> route = shuttleManager.getRoute();
 
         if (Process.samePositions(shuttleManager.getShuttle().getMovable().position,
-                Chart.getStation(route.get(step)).getPosition()))
+                Chart.getChart().getStation(route.get(step)).getPosition()))
         {
             if(step == route.size()-1) {
                 shuttleManager.setState(shuttleManager.getOnTheLastStationState());

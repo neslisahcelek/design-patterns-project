@@ -46,7 +46,7 @@ public class ShuttleManager {
     }
 
     public static void updateVelocityDirection(int destinationStation) {
-        Station station = Chart.getStation(destinationStation);
+        Station station = Chart.getChart().getStation(destinationStation);
 
         shuttle.setTargetPosition(station.position);
 

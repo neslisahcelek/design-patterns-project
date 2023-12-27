@@ -4,20 +4,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Chart { //bozuk
-    private static Route[][] chart;
-    private static Station[] station;
-    public static Route[][] getChartList() {
-
+public class Chart {
+    private static Chart chart = null;
+    private Chart(){}
+    public static Chart getChart() {
         if (chart == null) {
-            chart = calculateShortestPaths(getDistances());
+            chart = new Chart();
         }
         return chart;
     }
-    public static Route getChart(int i, int j) {
-        return getChartList()[i][j];
+
+
+    private static Route[][] route;
+    private static Station[] station;
+
+    private static Route[][] getRouteList() {
+
+        if (route == null) {
+            route = calculateShortestPaths(getDistanceList());
+        }
+        return route;
     }
-    private static int[][] getDistances()
+    public Route getRoute(int i, int j) {
+        return getRouteList()[i][j];
+    }
+    public int getDistance(int i, int j) {
+        return getRouteList()[i][j].getDistance();
+    }
+    public List<Integer> getPath(int i, int j) {
+        return getRouteList()[i][j].getPath();
+    }
+    public Station getStation(int stationName) {
+        if(stationName >= 1 && stationName <= 16)
+        {return getStationList()[stationName-1];}
+        else return new Station(0,0);
+    }
+    private static int[][] getDistanceList()
     {
         return new int[][]{
                 {0,22,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE},
@@ -38,7 +60,7 @@ public class Chart { //bozuk
                 {Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,66,0}
         };
     }
-    public static Station[] getStationList()
+    public Station[] getStationList()
     {
         Station[] stations = {
                 new Station(106, 856),
@@ -63,19 +85,7 @@ public class Chart { //bozuk
         }
         return station;
     }
-    public static Station getStation(int stationName)
-    {
-        if(stationName >= 1 && stationName <= 16)
-        {return getStationList()[stationName-1];}
-        else return new Station(0,0);
-    }
 
-    public static int getDistance(int i, int j) {
-        return getChartList()[i][j].getDistance();
-    }
-    public static List<Integer> getPath(int i, int j) {
-        return getChartList()[i][j].getPath();
-    }
 
     private static Route[][] calculateShortestPaths(int[][] distances) {
         int numNodes = distances.length;
