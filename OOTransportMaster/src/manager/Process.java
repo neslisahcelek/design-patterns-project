@@ -37,9 +37,6 @@ public class Process {
         Display display = new Display();
 
         Display.updateDrawableArrayList(); //check for new drawables
-
-        InitialImage.getInitialImage().setNewImage(cloneArray());
-        Display.updateImage(InitialImage.getInitialImage().getNewImage());
         display.createDisplay(Image.getImage().getMap()); //create the display
 
         Input.mouseEvent(display.getFrame());
