@@ -15,6 +15,7 @@ public class Passenger extends IPassenger implements Observer {
         super.id = id++;
     }
 
+    //Notify passenger that shuttle starts to move
     @Override
     public void update() {
         System.out.println("Passenger " + super.getId() + " is notified");
