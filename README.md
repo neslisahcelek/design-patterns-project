@@ -6,4 +6,5 @@ This project aims to solve the transportation problem by introducing a dynamic s
 This project is a transportation management system simulation. When you run the code, the first thing you see is a map. You can create passengers by clicking on the points you want on this map. You can delete the passenger by right-clicking on the passengers. When the number of passengers on the map reaches the maximum number of passengers that can board the shuttle, no more passengers can be added. By looking at the locations of its Passengers, the Shuttle calculates the most cost-effective route and begins its journey. After picking up all the passengers waiting at the stop, it completes its route at the last station and unloads the passengers.
 
 ## UML Diagram
-![](https://github.com/neslisahcelek/design-patterns-project/assets/70594682/ed391b84-2d15-41ed-8536-1ce2e216a47d)
+
+![](https://github.com/neslisahcelek/design-patterns-project/assets/70594682/a1957612-d347-4eab-b303-5acbe697ff59)
