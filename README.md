@@ -8,3 +8,8 @@ This project is a transportation management system simulation. When you run the 
 ## UML Diagram
 
 ![](https://github.com/neslisahcelek/design-patterns-project/assets/70594682/a1957612-d347-4eab-b303-5acbe697ff59)
+
+## Demo
+
+https://github.com/neslisahcelek/design-patterns-project/assets/70594682/5e13f53f-18ea-4519-989d-6ae65ecd6ceb
+
